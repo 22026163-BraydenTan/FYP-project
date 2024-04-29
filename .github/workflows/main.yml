@@ -11,4 +11,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: ./template/action.yaml
+      - uses: ./github/workflows/template
+/action.yaml
