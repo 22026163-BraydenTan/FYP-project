@@ -1,7 +1,7 @@
 name: Test Echo Setup
 on:
   push:
-    branches: ["features/revamp", "main", "releases/v1"]
+    branches: ["features/lighthouse", "main", "releases/v1"]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,3 +12,5 @@ jobs:
         uses: ./.github/template/echo/ # Reference to the directory for echo
       # - name: Run SonarCloud
       #   uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
+      - name: Run lighthouse scanner
+        uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
