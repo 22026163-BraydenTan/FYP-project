@@ -2,11 +2,10 @@ name: test echo setup
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "hotfix/echo-pipeline", "main" ]
     
 jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@4
     - uses: ./.github/workflow/template/echo.yaml
