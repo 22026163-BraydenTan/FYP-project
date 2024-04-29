@@ -1,0 +1,12 @@
+name: test echo setup
+
+on:
+  push:
+    branches: [ "features/action-workflow", "main" ]
+    
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@2
+    - uses: ./.github/workflow/template/echo.yaml
