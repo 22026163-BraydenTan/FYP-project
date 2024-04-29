@@ -1,9 +1,8 @@
 name: Echo Hello world
 runs:
   using: 'composite'
-
-steps:
-  - name: Run echo
-    run: |
-      echo "Hello world"
-      echo "This is a test"
+  steps:
+    - name: Run echo
+      run: |
+        echo "Hello world"
+        echo "This is a test"
