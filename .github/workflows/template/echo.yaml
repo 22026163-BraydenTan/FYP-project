@@ -1,0 +1,6 @@
+name: Echo Hello world
+runs:
+  using: 'composite'
+
+steps:
+  - run: echo "Hello world"
