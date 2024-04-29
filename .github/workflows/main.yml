@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test echo
-        uses: ./.github/workflow/template/
+        uses: ./.github/workflow/template/action.yaml
