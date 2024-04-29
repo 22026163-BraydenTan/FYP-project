@@ -1,0 +1,19 @@
+{
+    "name": "Scan",
+    "version": "1.0.0",
+    "description": "Scan website for statistics",
+    "main": "index.js",
+    "scripts": {
+      "build": "npm pack"  
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "body-parser": "^1.19.0",
+      "@npmcli/fs": "^3.1.0" 
+       },
+    "devDependencies": {
+    },
+    "keywords": [],
+    "author": "FYP",
+    "license": "ISC"
+  }

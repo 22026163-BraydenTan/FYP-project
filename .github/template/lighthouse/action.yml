@@ -1,0 +1,18 @@
+name: Lighthouse Scanner
+runs:
+  using: 'composite'
+  steps:
+    - name: Scan with lighthouse
+      shell: bash
+      run: |
+        npm cache verify
+        npm install
+        
+        echo "> Downloading lighthouse CLI "
+        npm install -g @lhci/cli
+        echo "> Running build"
+        npm run build
+
+        echo "> Running CLI"
+        lhci autorun 
+
