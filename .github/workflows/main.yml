@@ -1,11 +1,12 @@
-name: test echo setup
+name: "test echo setup"
 
 on:
   push:
     branches: [ "hotfix/echo-pipeline", "main" ]
     
 jobs:
-  job:
+  job: 
     runs-on: ubuntu-latest
     steps:
-    - uses: ./.github/workflow/template/echo.yaml
+      - name: Test echo
+        uses: ./.github/workflow/template/echo.yaml
