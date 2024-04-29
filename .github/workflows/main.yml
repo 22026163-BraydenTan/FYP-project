@@ -1,7 +1,7 @@
 name: Test Echo Setup
 on:
   push:
-    branches: [ "hotfix/echo-pipeline", "main" ]
+    branches: [ "*" ]
 jobs:
   test:
     runs-on: ubuntu-latest
