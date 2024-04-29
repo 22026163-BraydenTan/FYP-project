@@ -1,0 +1,15 @@
+name: Setup
+runs:
+  run-name: Echo setup   
+  usings: "composite"
+  steps:
+    - name: Checkout
+      run-name: Check out actions
+      uses: actions/checkout@v4
+
+    - name: Echo
+      run-name: Echo hello world
+      run: |
+        echo "Hello world"
+        echo "test"
+      shell: bash
