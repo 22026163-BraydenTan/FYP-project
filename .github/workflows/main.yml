@@ -1,8 +1,7 @@
 name: Test Echo Setup
 on:
   push:
-    branches: 
-      - '*'
+    branches: ["features/revamp", "main", "releases/v1"]
 jobs:
   test:
     runs-on: ubuntu-latest
