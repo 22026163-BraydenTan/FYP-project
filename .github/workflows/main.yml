@@ -1,7 +1,7 @@
 name: Test Echo Setup
 on:
   push:
-    branches: [ "hotfix/echo-pipeline", "main" ]
+    branches: ["features/revamp", "main", "releases/v1"]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -9,6 +9,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Echo Action
-        uses: ./.github/template/echo/action.yml # Reference to the directory for echo
+        uses: ./.github/template/echo/ # Reference to the directory for echo
       # - name: Run SonarCloud
-      #   uses: ./.github/template/sonarcloud/action.yml # Reference to sonarcloud directory, use crt+ / to uncomment
+      #   uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
