@@ -3,4 +3,7 @@ runs:
   using: 'composite'
 
 steps:
-  - run: echo "Hello world"
+  - name: Run echo
+    run: |
+      echo "Hello world"
+      echo "This is a test"
