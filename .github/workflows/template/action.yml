@@ -1,0 +1,9 @@
+name: Echo Hello world
+runs:
+  using: 'composite'
+  steps:
+    - name: Run echo
+      shell: bash
+      run: |
+        echo "Hello world"
+        echo "This is a test"

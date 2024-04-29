@@ -1,12 +1,12 @@
-name: test echo setup
-
+name: Test Echo Setup
 on:
   push:
-    branches: [ "main" ]
-    
+    branches: [ "hotfix/echo-pipeline", "main" ]
 jobs:
-  job:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@4
-    - uses: ./.github/workflow/template/echo.yaml
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Echo Action
+        uses: ./.github/workflows/template  # Reference to the directory containing action.yml
