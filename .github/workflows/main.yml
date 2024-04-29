@@ -9,4 +9,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Echo Action
-        uses: ./.github/workflows/template  # Reference to the directory containing action.yml
+        uses: ./.github/template/echo/action.yml # Reference to the directory for echo
+      # - name: Run SonarCloud
+      #   uses: ./.github/template/sonarcloud/action.yml # Reference to sonarcloud directory, use crt+ / to uncomment
