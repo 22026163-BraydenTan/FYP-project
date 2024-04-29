@@ -1,14 +1,15 @@
 name: Setup
+description: Test if pipeline is able to run this and display hello world
 runs:
-  - run-name Echo setup   
-    steps
-    - name Checkout
-      run-name Check out actions
-      uses actionscheckout@v4
+  using: "composite"
+  steps:
+    - name: Checkout
+      run-name: Check out actions
+      uses: actionscheckout@v4
 
-    - name Echo
-      run-name Echo hello world
-      run 
-        echo Hello world
-        echo test
-      shell bash
+    - name: Set Greeting
+      shell: bash
+      run: |
+        echo "Hello world"
+        echo "This is a test"
+      
