@@ -23,3 +23,6 @@ jobs:
         uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
       - name: Run lighthouse scanner
         uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
