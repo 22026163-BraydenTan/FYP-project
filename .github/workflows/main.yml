@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run SonarCloud
-        uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
+        uses: ./.github/template/sonarcloud # Reference to sonarcloud directory, use crt+ / to uncomment
       - name: Run lighthouse scanner
         uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
