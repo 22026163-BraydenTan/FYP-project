@@ -1,3 +1,11 @@
+on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+      SONAR_TOKEN:
+        required: true
+        
 name: run sonarcloud
 runs:
   using: 'composite'
