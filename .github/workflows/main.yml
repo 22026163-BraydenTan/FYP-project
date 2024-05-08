@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Run Echo Action
         uses: ./.github/template/echo/ # Reference to the directory for echo
-  Scan:
+  SonarCloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,6 +27,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}     
+
+  Lighthouse:
+    runs-on: ubuntu-latest
+    steps:
       - name: Lighthouse scanner
         uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
 
