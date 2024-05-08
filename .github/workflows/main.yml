@@ -1,13 +1,15 @@
 name: Test Echo Setup
 on:
   push:
-    branches: ["features/lighthouse", "main", "releases/v1"]
+    branches: ["22026163-BraydenTan-patch-5", "main", "releases/v1"]
 jobs:
   Echo_Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Run Echo Action
         uses: ./.github/template/echo/ # Reference to the directory for echo
   Scan:
