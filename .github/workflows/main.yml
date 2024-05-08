@@ -3,13 +3,16 @@ on:
   push:
     branches: ["features/lighthouse", "main", "releases/v1"]
 jobs:
-  test:
+  Echo_Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Echo Action
         uses: ./.github/template/echo/ # Reference to the directory for echo
+  Scan:
+    runs-on: ubuntu-latest
+    steps:
       - name: Run SonarCloud
         uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
       - name: Run lighthouse scanner
