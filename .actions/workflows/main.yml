@@ -19,6 +19,9 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: 17
-
-        -name: Unit Tests
-          run: 
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
