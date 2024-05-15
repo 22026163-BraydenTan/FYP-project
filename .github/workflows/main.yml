@@ -1,16 +1,36 @@
-name: Test Echo Setup
+name: Build
 on:
   push:
-    branches: ["features/lighthouse", "main", "releases/v1"]
+    branches: ["22026163-BraydenTan-patch-5", "main", "releases/v1"]
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  test:
+  Echo_Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run Echo Action
+        uses: ./.github/template/echo/ # Reference to the directory for echo
+  SonarCloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run Echo Action
-        uses: ./.github/template/echo/ # Reference to the directory for echo
-      - name: Run SonarCloud
-        uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
-      - name: Run lighthouse scanner
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}     
+
+  Lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lighthouse scanner
         uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
+
