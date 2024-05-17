@@ -1,36 +1,33 @@
-name: Build
+name: CI-CD pipeline
+
 on:
   push:
-    branches: ["22026163-BraydenTan-patch-5", "main", "releases/v1"]
-  pull_request:
-    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - Brayden
+
 jobs:
-  Echo_Test:
+  build-deploy:
+    name: Build and deploy web app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Run Echo Action
-        uses: ./.github/template/echo/ # Reference to the directory for echo
-  SonarCloud:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          node-version: '14'
+        
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}     
-
-  Lighthouse:
+        uses: sonarsource/sonarcloud-github-action@master
+        
+  build-and-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Lighthouse scanner
-        uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
-
+    needs: build-and-test
