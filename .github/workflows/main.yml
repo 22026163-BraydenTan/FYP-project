@@ -13,6 +13,9 @@ jobs:
 
       - name: SonarCloud Scan
         uses: ./.github/template/sonarcloud/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Lighthouse scanner
         uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
