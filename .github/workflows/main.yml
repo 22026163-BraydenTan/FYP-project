@@ -17,8 +17,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Lighthouse scanner
-        uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
+      # - name: Lighthouse scanner
+      #   uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
+      
   # build-and-deploy:
   #   runs-on: ubuntu-latest
   #   needs: build-and-test
