@@ -42,4 +42,5 @@ Setting up CI/CD pipeline
 - Track and report on releases
 - Document changes throughout the different versions
 - Finalize technical documentation and workflows.
+
 Last check before Presentation Day
