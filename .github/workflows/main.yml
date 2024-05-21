@@ -1,8 +1,9 @@
 name: CI-CD pipeline
 
 on:
+  workflow_dispatch:
   push:
-
+  
 jobs:
   build-deploy:
     name: Build and deploy web app
