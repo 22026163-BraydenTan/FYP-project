@@ -10,11 +10,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
-   - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
+  - name: SonarCloud Scan
+    uses: SonarSource/sonarcloud-github-action@master
+    env:
+      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
 # jobs:
 #   sonarcloud:
 #     name: SonarCloud
