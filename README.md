@@ -23,13 +23,13 @@ Task
 - Link Github and Jira
 - Install SonarQube for code analysis.
 - "Develop initial test plans using Cucumber & Gherkin.
-"
-"Integrate SonarLit with IDE.
-"
+
+Integrate SonarLit with IDE.
+
 Execution
 - Test cases using Cucumber & Gherkin.
-- "Integrate GitHub Actions with SonarQube for code quality checks.
-"
+- Integrate GitHub Actions with SonarQube for code quality checks.
+
 Setting up CI/CD pipeline
 - Test CI/CD workflows with sample code changes.
 - Deploy the containerized application to Kubernetes cluster
