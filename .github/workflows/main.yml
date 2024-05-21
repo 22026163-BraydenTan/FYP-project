@@ -1,16 +1,33 @@
-name: Test Echo Setup
+name: CI-CD pipeline
+
 on:
   push:
-    branches: ["features/lighthouse", "main", "releases/v1"]
+    branches:
+      - main
+      - Brayden
+
 jobs:
-  test:
+  build-deploy:
+    name: Build and deploy web app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Echo Action
-        uses: ./.github/template/echo/ # Reference to the directory for echo
-      # - name: Run SonarCloud
-      #   uses: ./.github/template/sonarcloud/ # Reference to sonarcloud directory, use crt+ / to uncomment
-      - name: Run lighthouse scanner
-        uses: ./.github/template/lighthouse/ # Reference to the directory for lighthouse
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+        
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
