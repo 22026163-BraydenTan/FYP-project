@@ -1,4 +1,4 @@
-Task
+Tasks
 
 - Initiation
 - Set up Gantts Chart Timeline
