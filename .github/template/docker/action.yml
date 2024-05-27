@@ -1,0 +1,33 @@
+name: run Docekr
+inputs:
+  DOCKER_USERNAME:
+    description: 'A Docker Username'
+    required: true
+  DOCKER_TOKEN:
+    description: 'A Docker PAT'
+    required: true
+    
+runs:
+  using: 'composite'
+  steps:
+  
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ inputs.DOCKER_USERNAME }}
+          password: ${{ inputs.DOCKER_TOKEN }}
+      
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: richardkhy/webapp
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+#        run: docker push your_dockerhub_username/your_image_name:latest	
