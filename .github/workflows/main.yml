@@ -1,5 +1,9 @@
 name: CI/CD Pipeline
 
+# 1) Set up and build the app
+# 2) scan said app
+# 3) deploy via docker
+
 on:
   workflow_dispatch:
   push:
