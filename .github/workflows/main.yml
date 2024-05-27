@@ -90,5 +90,5 @@ jobs:
       - name: Docker Deploy
         uses: ./.github/template/docker/
         with:
-          GITHUB_TOKEN: ${{ secrets.DOCKER_USERNAME }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.DOCKER_TOKEN }}	  
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Needed to get PR information, if any
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}	  
