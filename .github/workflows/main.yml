@@ -30,7 +30,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20'	
+          node-version: '12'	
 
       - name: Run tests
         run: npm test # under deploy job or test job????
@@ -46,7 +46,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20'
+          node-version: '12'
 
       - name: Install dependencies
         run: npm install
