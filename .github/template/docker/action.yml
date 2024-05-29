@@ -1,4 +1,4 @@
-name: run Docekr
+name: run Docker
 inputs:
   DOCKER_USERNAME:
     description: 'A Docker Username'
