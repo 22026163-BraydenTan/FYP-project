@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests on test.html
+      - name: Run tests on HTML files
         run: |
           # Example: Validate HTML file
           npx htmlhint src
