@@ -30,4 +30,10 @@ runs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-#        run: docker push your_dockerhub_username/your_image_name:latest	
+#        run: docker push your_dockerhub_username/your_image_name:latest
+
+      - name: Build the Docker image
+        run: docker build -t yourusername/test-html-node .
+
+      - name: Push the Docker image
+        run: docker push yourusername/test-html-node
