@@ -3,10 +3,10 @@ name: CI-CD Pipeline
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/main.yml
+    # branches:
+    #   - main
+    # paths:
+    #   - .github/workflows/main.yml
   pull_request:
     branches:
       - main
