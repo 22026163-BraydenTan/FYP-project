@@ -1,3 +1,0 @@
-git add .github/workflows/main.yml
-git commit -m "Add CI/CD pipeline workflow"
-git push origin main
