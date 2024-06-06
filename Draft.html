@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbon Emission Calculator</title>
+    <title>Our FYP Project</title>
     <style>
         body, html {
             margin: 0;
@@ -13,67 +13,38 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            background-color: #e0e0f0;
+            flex-direction: column; /* Added for vertical stacking */
+            background-color: #f0f0f0;
         }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .image-container img {
-            max-width: 300px; /* Adjust the size as needed */
-            height: auto;
-        }
-        form, p {
-            margin-top: 20px;
+
+        header {
             text-align: center;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer; /* Adds a pointer cursor on hover */
+            margin-top: 20px; /* Space from the header */
         }
     </style>
 </head>
 <body>
-    <div class="image-container">
-        <img src="2022-toyota-gr-86.jpg" alt="Car">
-        <img src="SBS_Transit_Volvo_B9TL_Wright_Eclipse_Gemini_2_-_SG5300P_70M_(1).jpg" alt="Bus">
-        <img src="motorcycle.jpeg" alt="Motorcycle">
-    </div>
-    <h1>Carbon Emission Calculator</h1>
-    <form id="emissionForm">
-        <label for="transport">What mode of transport did you take today?</label>
-        <select id="transport" name="transport">
-            <option value="car">Car</option>
-            <option value="bus">Bus</option>
-            <option value="motorcycle">Motorcycle</option>
-            <option value="train">Train</option>
-            <option value="walk">Walk</option>
-            <option value="others">Others</option>
-        </select>
-        <br>
-        <label for="duration">How long was your trip (in minutes)?</label>
-        <input type="number" id="duration" name="duration" min="0">
-        <br>
-        <button type="button" onclick="calculateEmission()">Calculate</button>
-    </form>
-    <p id="result"></p>
-
+    <header>
+        <h1>Our FYP Project</h1>
+    </header>
+    <button onclick="location.href='project_description.html'">Go to Project Description</button>
+    <button onclick="location.href='carbon_calculator.html'">Carbon Emission Calculator</button>
     <script>
-        function calculateEmission() {
-            var transport = document.getElementById("transport").value;
-            var duration = document.getElementById("duration").value;
-            var emissionsPerHour = {
-                car: 2.34,
-                bus: 2.87,
-                motorcycle: 1.52,
-                train: 0.54,
-                walk: 0,
-                others: 3.00
-            };
-
-            var emission = (emissionsPerHour[transport] / 60) * duration;
-            document.getElementById("result").innerText = "Carbon emission from your trip is: " + emission.toFixed(2) + " kg";
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Document loaded and ready to go!');
+        });
     </script>
-    <button onclick="location.href='Draft.html'">Home</button>
 </body>
 </html>
