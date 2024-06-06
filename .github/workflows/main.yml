@@ -60,7 +60,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SonarCloud Scan
-        uses: ./.github/template/sonarcloud/
+        uses: SonarSource/sonarcloud-github-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
