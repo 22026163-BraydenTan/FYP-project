@@ -16,6 +16,16 @@
             flex-direction: column;
             background-color: #e0e0f0;
         }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 300px; /* Adjust the size as needed */
+            height: auto;
+        }
         form, p {
             margin-top: 20px;
             text-align: center;
@@ -23,6 +33,11 @@
     </style>
 </head>
 <body>
+    <div class="image-container">
+        <img src="2022-toyota-gr-86.jpg" alt="Car">
+        <img src="SBS_Transit_Volvo_B9TL_Wright_Eclipse_Gemini_2_-_SG5300P_70M_(1).jpg" alt="Bus">
+        <img src="motorcycle.jpeg" alt="Motorcycle">
+    </div>
     <h1>Carbon Emission Calculator</h1>
     <form id="emissionForm">
         <label for="transport">What mode of transport did you take today?</label>
@@ -59,5 +74,6 @@
             document.getElementById("result").innerText = "Carbon emission from your trip is: " + emission.toFixed(2) + " kg";
         }
     </script>
+    <button onclick="location.href='Draft.html'">Home</button>
 </body>
 </html>
