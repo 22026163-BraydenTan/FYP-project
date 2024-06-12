@@ -5,42 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our FYP Project</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Added for vertical stacking */
-            background-color: #f0f0f0;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
         }
-
-        header {
+        .project-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 100%;
         }
-
-        h1 {
+        .project-container h1 {
             font-size: 2.5em;
+            margin-bottom: 20px;
             color: #333;
         }
-
-        button {
+        .project-container button {
+            background-color: #4CAF50;
+            color: white;
             padding: 10px 20px;
             font-size: 1.2em;
-            cursor: pointer; /* Adds a pointer cursor on hover */
-            margin-top: 20px; /* Space from the header */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .project-container button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Our FYP Project</h1>
-    </header>
-    <button onclick="location.href='project_description.html'">Go to Project Description</button>
-    <button onclick="location.href='carbon_calculator.html'">Carbon Emission Calculator</button>
+    <div class="project-container">
+        <header>
+            <h1>Our FYP Project</h1>
+        </header>
+        <button onclick="location.href='project_description.html'">Go to Project Description</button>
+        <button onclick="location.href='login.html'">Carbon Emission Calculator</button>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Document loaded and ready to go!');
