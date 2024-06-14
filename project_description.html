@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Description</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .description-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            text-align: center;
+        }
+        .description-container h1 {
+            margin-bottom: 20px;
+        }
+        .description-container section {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .description-container p {
+            margin-top: 20px;
+        }
+        .description-container ol {
+            padding-left: 20px; /* Proper padding for list */
+        }
+        .description-container li {
+            margin: 10px 0; /* Space out list items */
+        }
+        .description-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .description-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="description-container">
+        <header>
+            <h1>Project Description</h1>
+        </header>
+        <section>
+            <p>Proposed a Full-Stack application to solve Sustainability issues and implement DevOps release management based on the following requirements:</p>
+            <ol>
+                <li>Selection and usage of Gitpod, CodeSpaces, Code-Server and VSCode as an integrated development environment and CoPilot for AI-based code completion.</li>
+                <li>Usage of a static code analysis tool used to flag programming errors, bugs, stylistic errors, and suspicious constructs. Integrated with the IDE to detect changes in the code.</li>
+                <li>Jira and GitHub Integration to provide better traceability between Planning, Requirement, Code, Build, and Test Execution.</li>
+                <li>Implement Cucumber and Gherkin to add Test Plan and Test Cases to a specific story in Jira.</li>
+                <li>Test results will be uploaded back to Jira to provide the Requirement Traceability Matrix.</li>
+                <li>Implement Feature-Driven Development to enhance developer experience and reduce time to develop new features, enabling tasks to be performed in the Cloud IDE.</li>
+                <li>Implementation of End-to-End CI/CD release workflow using GitHub Actions, including continuous deployment by pushing the Docker image to a Docker registry (Docker Hub).</li>
+                <li>Inspect the code using SonarQube and enable the Quality Gate Check-in CI/CD workflow.</li>
+                <li>Detailed explanations together with relevant remediation for each of the identified vulnerabilities. The scan result should show reduced vulnerabilities after the mitigation.</li>
+                <li>Release Management, including workflow diagram, version creation, task assignments, tracking releases, branch and PR creation, build, deployment, test, evidence capture, and reporting.</li>
+            </ol>
+        </section>
+        <button onclick="location.href='homepage.html'">Home</button>
+    </div>
+</body>
+</html>
