@@ -30,4 +30,4 @@ runs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-        run: docker push richardkhy/webapp:latest
+       # run: docker push richardkhy/webapp:latest
