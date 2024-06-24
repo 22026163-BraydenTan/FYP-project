@@ -1,6 +1,6 @@
-FROM node:latest
+FROM node:22-slim
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/
 
 COPY package.json ./
 
@@ -8,5 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8080
+
 CMD [ "node", "index.js" ]
