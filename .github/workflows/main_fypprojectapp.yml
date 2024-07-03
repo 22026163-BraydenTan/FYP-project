@@ -4,10 +4,11 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - fypprojectapp
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+  push:
+      branches:
+        - main
+    
 
 jobs:
   build:
