@@ -101,7 +101,7 @@ jobs:
 
   deploy_web:
     runs-on: ubuntu-latest
-    needs: [build_test,scan,deploy_docker]
+    needs: [build_test,scan,deploy_docker,zip_web]
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.web-app-url }}
