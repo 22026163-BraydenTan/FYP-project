@@ -109,6 +109,9 @@ jobs:
           name: node-app
           path: release.zip
 
+      - name: Verify downloaded artifact
+        run: ls -l release.zip
+
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
