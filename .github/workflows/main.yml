@@ -115,7 +115,6 @@ jobs:
       - name: Login to Azure
         # run: |
         #   az login -u /subscriptions/b9b46d89-3c8e-456b-9272-4eb275d3c84f/resourceGroups/FYPproject/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FYPprojectwebapp-id-b5c6
-        #   az 
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}
