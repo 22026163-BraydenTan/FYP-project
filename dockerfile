@@ -1,4 +1,4 @@
-FROM node:22-slim
+FROM nginx:1.10.1-alpine
 
 WORKDIR /usr/src/
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "node", "index.js" ]
+CMD [ "nginx", "node", "index.js" ]
