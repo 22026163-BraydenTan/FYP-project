@@ -64,9 +64,9 @@ jobs:
         run: |
           # Example: Scan for security issues using a tool like retire.js
           npx retire --path src/test.html --outputformat json
-  build:
+  zip_web:
     runs-on: ubuntu-latest
-    needs: [build_test]
+    needs: [build_test,scan]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
