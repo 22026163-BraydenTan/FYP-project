@@ -39,7 +39,7 @@ jobs:
       - name: Set up .Net
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8x'
+          dotnet-version: '8.x'
 
       - name: Build dotnet
         run: dotnet build --configuration Release
