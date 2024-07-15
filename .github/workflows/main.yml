@@ -113,13 +113,13 @@ jobs:
         run: unzip release.zip
       
       - name: Login to Azure
-        run: |
-          az login --identity -u /subscriptions/b9b46d89-3c8e-456b-9272-4eb275d3c84f/resourceGroups/FYPproject/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FYPprojectwebapp-id-b5c6
-        # uses: azure/login@v1
-        # with:
-        #   client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}
-        #   tenant-id: ${{ secrets.AZURE_TENET_ID }}
-        #   subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_B5C6 }}
+        # run: |
+          # az login --identity -u /subscriptions/b9b46d89-3c8e-456b-9272-4eb275d3c84f/resourceGroups/FYPproject/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FYPprojectwebapp-id-b5c6
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}
+          tenant-id: ${{ secrets.AZURE_TENET_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_B5C6 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
