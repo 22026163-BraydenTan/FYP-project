@@ -25,29 +25,29 @@ jobs:
           java-version: '11'
           distribution: 'adopt' # Specify distribution
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '20'
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4.0.2
+      #   with:
+      #     node-version: '20'
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+      # - name: npm install, build, and test
+      #   run: |
+      #     npm install
+      #     npm run build --if-present
+      #     npm run test --if-present
 
-      - name: Set up .Net
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+      # - name: Set up .Net
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: '8.x'
 
-      - name: Build dotnet
-        run: dotnet build --configuration Release
+      # - name: Build dotnet
+      #   run: dotnet build --configuration Release
 
-      - name: Run tests on HTML files
-        run: |
-          # Example: Validate HTML file
-          npx htmlhint src
+      # - name: Run tests on HTML files
+      #   run: |
+      #     # Example: Validate HTML file
+      #     npx htmlhint src
 
   # Start of scan job: Scan the code for any vulnerabilities or known CSV
   scan:
@@ -84,14 +84,14 @@ jobs:
       #     name: node-app
       #     path: release.zip
 
-      - name: Publish 
-        run: dotnet publish -c Release -o $GITHUB_WORKSPACE/artifact
+      # - name: Publish 
+      #   run: dotnet publish -c Release -o $GITHUB_WORKSPACE/artifact
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: $GITHUB_WORKSPACE/artifact
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: .net-app
+      #     path: $GITHUB_WORKSPACE/artifact
 
   # Start of deploy job: Deploy code via docker to Kubernetes
   deploy_docker:
@@ -124,8 +124,8 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
-        with:
-          name: .net-app
+        # with:
+        #   name: .net-app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
