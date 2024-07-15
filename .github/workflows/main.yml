@@ -36,10 +36,27 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
+      - name: Set up .Net
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8x'
+
+      - name: Build dotnet
+        run: dotnet build --configuration Release
+
       - name: Run tests on HTML files
         run: |
           # Example: Validate HTML file
           npx htmlhint src
+
+      - name: Publish 
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   # Start of scan job: Scan the code for any vulnerabilities or known CSV
   scan:
