@@ -1,4 +1,4 @@
-FROM node: latest
+FROM node:latest
 
 WORKDIR /usr/src/app
 COPY server/package.json ./server/
@@ -7,4 +7,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "node", "server/server.js" ]
+CMD [ "node", "server.js" ]
