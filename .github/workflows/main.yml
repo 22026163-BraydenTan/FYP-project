@@ -25,10 +25,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt' # Specify distribution
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4.0.2
-      #   with:
-      #     node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20'
 
       # - name: npm install, build, and test
       #   run: |
