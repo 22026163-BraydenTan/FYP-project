@@ -21,7 +21,7 @@ runs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: richardkhy/webapp
+          images: richardkhy/webapp:brayden
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
