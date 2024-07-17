@@ -133,9 +133,10 @@ jobs:
 
       - name: Verify artifact
         run: | 
-          ls -l
           zip release.zip ./* -r
-          ls -l release.zip
+        # ls -l
+          
+        # ls -l release.zip
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
