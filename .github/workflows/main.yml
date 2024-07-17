@@ -3,10 +3,8 @@ name: CI-CD Pipeline for Azure Web App - FYPprojectwebapp
 on:
   workflow_dispatch:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - .github/workflows/main.yml
+    branches:
+      - brayden
   pull_request:
     branches:
       - main
@@ -31,15 +29,15 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: https://index.docker.io/v1/
-          username: ${{ secrets.AzureAppService_ContainerUsername_cb45db4fe6674d7ca1db2e50953b92d8 }}
-          password: ${{ secrets.AzureAppService_ContainerPassword_08ad1f4c10a94ffdb81208aef013179d }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_cb45db4fe6674d7ca1db2e50953b92d8 }}/repository/docker/richardkhy/webapp/general/richardkhy/webapp:${{ github.sha }}
+          tags: index.docker.io/${{ secrets.DOCKER_USERNAME }}/repository/docker/richardkhy/webapp/general/richardkhy/webapp:${{ github.sha }}
           file: ./Dockerfile
 
   scan:
@@ -136,4 +134,4 @@ jobs:
           app-name: 'FYPprojectwebapp'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_2ad6e0e114864b5abe6310761bb9ba8e }}
-          images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_cb45db4fe6674d7ca1db2e50953b92d8 }}/repository/docker/richardkhy/webapp/general/richardkhy/webapp:${{ github.sha }}'
+          images: 'index.docker.io/${{ secrets.DOCKER_USERNAME }}/repository/docker/richardkhy/webapp/general/richardkhy/webapp:${{ github.sha }}'
