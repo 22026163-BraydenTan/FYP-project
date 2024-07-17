@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/mydatabase', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Define a schema and model for users
 const Schema = mongoose.Schema;
