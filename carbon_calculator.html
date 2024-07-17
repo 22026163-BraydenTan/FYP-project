@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Emission Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .calculator-container h1 {
+            margin-bottom: 20px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 80px;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .calculator-container select, 
+        .calculator-container input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .calculator-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .calculator-container button:hover {
+            background-color: #45a049;
+        }
+        .calculator-container p {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .home-button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .home-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Carbon Emission Calculator</h1>
+        <div class="image-container">
+            <img src="2022-toyota-gr-86.jpg" alt="Car">
+            <img src="SBS_Transit_Volvo_B9TL_Wright_Eclipse_Gemini_2_-_SG5300P_70M_(1).jpg" alt="Bus">
+            <img src="motorcycle.jpeg" alt="Motorcycle">
+        </div>
+        <form id="emissionForm">
+            <label for="transport">What mode of transport did you take today?</label>
+            <select id="transport" name="transport">
+                <option value="car">Car</option>
+                <option value="bus">Bus</option>
+                <option value="motorcycle">Motorcycle</option>
+                <option value="train">Train</option>
+                <option value="walk">Walk</option>
+                <option value="others">Others</option>
+            </select>
+            <br>
+            <label for="duration">How long was your trip (in minutes)?</label>
+            <input type="number" id="duration" name="duration" min="0">
+            <br>
+            <button type="button" onclick="calculateEmission()">Calculate</button>
+        </form>
+        <p id="result"></p>
+        <button class="home-button" onclick="location.href='homepage.html'">Home</button>
+    </div>
+
+    <script>
+        function calculateEmission() {
+            var transport = document.getElementById("transport").value;
+            var duration = document.getElementById("duration").value;
+            var emissionsPerHour = {
+                car: 2.34,
+                bus: 2.87,
+                motorcycle: 1.52,
+                train: 0.54,
+                walk: 0,
+                others: 3.00
+            };
+
+            var emission = (emissionsPerHour[transport] / 60) * duration;
+            document.getElementById("result").innerText = "Carbon emission from your trip is: " + emission.toFixed(2) + " kg";
+        }
+    </script>
+</body>
+</html>
