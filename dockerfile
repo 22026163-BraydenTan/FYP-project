@@ -1,23 +1,13 @@
-# Choose the Image which has Node installed already
-FROM node:alpine as build
+FROM node:22-slim
 
-WORKDIR /code
+WORKDIR /usr/src/
 
-COPY package.json package.json
+COPY package.json ./
 
-RUN npm ci --production
-# COPY all the files from Current Directory into the Container
+RUN npm install
+
 COPY . .
 
-# Install the Project Dependencies like Express Framework
-RUN npm run build
+EXPOSE 8080
 
-FROM nginx:1.22-alpine as prod
-
-COPY --from=build /code/build /usr/share/nginx/html
-
-# Tell that this image is going to Open a Port 
-EXPOSE 80
-
-# Default Command to launch the Application
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "node", "index.js" ]
