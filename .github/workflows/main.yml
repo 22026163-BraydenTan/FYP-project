@@ -125,8 +125,8 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
-        # with:
-        #   name: .net-app
+        with:
+          name: node-app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
