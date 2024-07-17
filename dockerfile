@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY server/package*.json ./server/
 COPY src/package*.json ./src/
 
-RUN cpm install
+RUN npm install
 
 COPY . .
 
