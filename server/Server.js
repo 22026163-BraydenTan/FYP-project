@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path'); // Node.js module for working with file paths
 const app = express();
 
+// MongoDB connection
 mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@', { useNewUrlParser: true, useUnifiedTopology: true });
 
+// Define a schema and model for users
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
@@ -13,9 +14,8 @@ const userSchema = new Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+// Middleware setup
 app.use(bodyParser.json());
-
-app.use(express.static(path.join(__dirname, 'src')));
 
 // Endpoint to handle user registration
 app.post('/register', async (req, res) => {
@@ -43,12 +43,8 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Serve homepage.html as the main entry point
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'homepage.html'));
-});
-
-const PORT = process.env.PORT || 3000; 
+// Start server
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
