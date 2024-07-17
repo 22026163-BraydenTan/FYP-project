@@ -1,7 +1,7 @@
 FROM node:latest
 
 WORKDIR /usr/src/app
-COPY server/package.json ./server/
+COPY server/package.json ./
 
 RUN npm install
 COPY . .
