@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: $GITHUB_WORKSPACE/release.zip
 # .Net
       # - name: Publish 
       #   run: dotnet publish -c Release -o $GITHUB_WORKSPACE/artifact
@@ -130,16 +130,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: $GITHUB_WORKSPACE
+          path: $GITHUB_WORKSPACE/release.zip
 
       - name: Verify artifact
         run: |
-          ls -l  
-          zip release.zip ./* -r
+          ls -la
+          zip $GITHUB_WORKSPACE/release.zip ./* -r
           # ls -l release.zip
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip $GITHUB_WORKSPACE/release.zip
       
       - name: Login to Azure
         # run: |
