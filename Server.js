@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 const app = express();
 
 // MongoDB connection
@@ -16,6 +17,9 @@ const User = mongoose.model('User', userSchema);
 
 // Middleware setup
 app.use(bodyParser.json());
+
+//server static web
+app.use(express.static(path.join(__dirname, './')));
 
 // Endpoint to handle user registration
 app.post('/register', async (req, res) => {
@@ -43,8 +47,13 @@ app.post('/login', async (req, res) => {
   }
 });
 
+//server html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'homepage.html'));
+});
+
 // Start server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;  // Use the PORT environment variable if available
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
