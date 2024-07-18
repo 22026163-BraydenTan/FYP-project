@@ -30,24 +30,18 @@ jobs:
         with:
           node-version: '20'
 
-      # - name: npm install, build, and test
-      #   run: |
-      #     npm install
-      #     npm run build --if-present
-      #     npm run test --if-present
+      - name: Set up .Net
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
 
-      # - name: Set up .Net
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     dotnet-version: '8.x'
+      - name: Build dotnet
+        run: dotnet build --configuration Release
 
-      # - name: Build dotnet
-      #   run: dotnet build --configuration Release
-
-      # - name: Run tests on HTML files
-      #   run: |
-      #     # Example: Validate HTML file
-      #     npx htmlhint src
+      - name: Run tests on HTML files
+        run: |
+          # Example: Validate HTML file
+          npx htmlhint src
 
   # Start of scan job: Scan the code for any vulnerabilities or known CSV
   scan:
