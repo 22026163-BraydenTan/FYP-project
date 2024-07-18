@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('./homepage.html');
 const app = express();
 
 // MongoDB connection
@@ -41,6 +42,11 @@ app.post('/login', async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: 'Failed to login', error: err.message });
   }
+});
+
+//server html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './', 'homepage.html'));
 });
 
 // Start server
