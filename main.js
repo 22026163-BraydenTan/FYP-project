@@ -87,7 +87,7 @@ function initializePage() {
 
     const button2 = document.createElement('button');
     button2.textContent = 'Carbon Emission Calculator';
-    button2.onclick = () => location.href = 'carbon_calculator.html';
+    button2.onclick = () => location.href = 'login.html';
     projectContainer.appendChild(button2);
 
     // Add event listener for DOMContentLoaded
