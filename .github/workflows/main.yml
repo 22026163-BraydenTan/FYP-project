@@ -3,10 +3,6 @@ name: CI-CD Pipeline
 on:
   workflow_dispatch:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - .github/workflows/main.yml
   pull_request:
     branches:
       - main
@@ -34,10 +30,8 @@ jobs:
       #   uses: actions/setup-dotnet@v4
       #   with:
       #     dotnet-version: '8.x'
-
       # - name: Build dotnet
       #   run: dotnet build --configuration Release
-
       # - name: Run tests on HTML files
       #   run: |
       #     # Example: Validate HTML file
@@ -60,7 +54,7 @@ jobs:
       - name: Scan HTML file for vulnerabilities
         run: |
           # Example: Scan for security issues using a tool like retire.js
-          npx retire --path src/test.html --outputformat json
+          npx retire --path ./ --outputformat json
           
   create_artifact:
     runs-on: ubuntu-latest
@@ -81,15 +75,6 @@ jobs:
         with:
           name: node-app
           path: release.zip
-# .Net
-      # - name: Publish 
-      #   run: dotnet publish -c Release -o $GITHUB_WORKSPACE/artifact
-
-      # - name: Upload artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: .net-app
-      #     path: $GITHUB_WORKSPACE/artifact
 
   # Start of docker job: Deploy code via docker to Kubernetes
   deploy_docker:
@@ -135,8 +120,6 @@ jobs:
         run: unzip release.zip
       
       - name: Login to Azure
-        # run: |
-          # az login --identity -u /subscriptions/b9b46d89-3c8e-456b-9272-4eb275d3c84f/resourceGroups/FYPproject/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FYPprojectwebapp-id-b5c6
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}
