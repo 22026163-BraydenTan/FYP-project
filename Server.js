@@ -11,7 +11,8 @@ mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
-  password: String
+  password: String,
+  email: String
 });
 const User = mongoose.model('User', userSchema);
 
@@ -23,9 +24,9 @@ app.use(express.static(path.join(__dirname, './')));
 
 // Endpoint to handle user registration
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   try {
-    const newUser = await User.create({ username, password });
+    const newUser = await User.create({ username, password, email });
     res.status(201).json({ message: 'User registered successfully', user: newUser });
   } catch (err) {
     res.status(400).json({ message: 'Failed to register user', error: err.message });
