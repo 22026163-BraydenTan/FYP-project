@@ -10,23 +10,46 @@ mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8
 // Define a schema and model for users
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
-  username: String,
-  password: String,
-  email: String
+  username: { type: String, unique: true, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true }
 });
 const User = mongoose.model('User', userSchema);
 
 // Middleware setup
 app.use(bodyParser.json());
 
-//server static web
+// Serve static files
 app.use(express.static(path.join(__dirname, './')));
+
+// Endpoint to check for duplicate usernames
+app.post('/check-username', async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    res.json({ exists: !!user });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to check username', error: err.message });
+  }
+});
 
 // Endpoint to handle user registration
 app.post('/register', async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, email, password } = req.body;
+
+  // Validate email domain
+  if (!email.endsWith('@gmail.com')) {
+    return res.status(400).json({ message: 'Email must be a @gmail.com address' });
+  }
+
   try {
-    const newUser = await User.create({ username, password, email });
+    // Check if username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    const newUser = await User.create({ username, email, password });
     res.status(201).json({ message: 'User registered successfully', user: newUser });
   } catch (err) {
     res.status(400).json({ message: 'Failed to register user', error: err.message });
@@ -48,7 +71,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-//server html
+// Serve the homepage
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'homepage.html'));
 });
