@@ -80,12 +80,31 @@
             const confirm_password = document.getElementById('confirm_password').value;
             
             // Basic client-side validation
+            if (!email.endsWith('@gmail.com')) {
+                alert('Email must be a @gmail.com address');
+                return;
+            }
+
             if (password !== confirm_password) {
                 alert('Passwords do not match');
                 return;
             }
             
             try {
+                // Check for duplicate username
+                const usernameCheckResponse = await fetch('/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username })
+                });
+                const usernameCheckData = await usernameCheckResponse.json();
+                if (usernameCheckData.exists) {
+                    alert('Username already exists');
+                    return;
+                }
+
                 const response = await fetch('/register', {
                     method: 'POST',
                     headers: {
