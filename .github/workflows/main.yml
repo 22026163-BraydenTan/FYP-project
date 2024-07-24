@@ -45,7 +45,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: SonarCloud Scan
+      - name: SonarCloud Scan #Scan
         uses: ./.github/template/sonarcloud/
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
