@@ -19,31 +19,31 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { fla
 app.use(morgan('combined', { stream: logStream }));
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to serve the homepage
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
+    res.sendFile(path.join(__dirname, 'homepage.html'));
 });
 
 // Route to serve the project description
 app.get('/projectdescription', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'project_description.html'));
+    res.sendFile(path.join(__dirname, 'project_description.html'));
 });
 
 // Route to serve the carbon calculator
 app.get('/carboncalculator', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'carbon_calculator.html'));
+    res.sendFile(path.join(__dirname, 'carbon_calculator.html'));
 });
 
 // Route to serve the login page
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 // Route to serve the register page
 app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+    res.sendFile(path.join(__dirname, 'register.html'));
 });
 
 // Handle login form submission
