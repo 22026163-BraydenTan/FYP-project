@@ -111,9 +111,3 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Post to Slack (optional)
-        if: success()  # Send a Slack notification if the deployment is successful
-        uses: rtCamp/action-slack-notify@v2
-        with:
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-          message: "New Docker image has been pushed to Docker Hub"
