@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4  # Build and push Docker image to Docker Hub
+        uses: ./.github/template/docker/  # Build and push Docker image to Docker Hub
         with:
           context: .                       # The context path for the Docker build
           push: true                       # Push the image after building
