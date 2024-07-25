@@ -40,9 +40,11 @@ jobs:
       - name: Build and push Docker image
         uses: ./.github/template/docker/  # Build and push Docker image to Docker Hub
         with:
-          context: .                       # The context path for the Docker build
-          push: true                       # Push the image after building
-          tags: ${{ secrets.DOCKER_REPOSITORY }}  # Tag the image
+          #context: .                       # The context path for the Docker build
+          #push: true                       # Push the image after building
+          #tags: ${{ secrets.DOCKER_REPOSITORY }}  # Tag the image
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Needed to get PR information, if any
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
   # Test Job: Runs tests on the application
   test:
