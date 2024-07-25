@@ -1,141 +1,147 @@
 name: CI/CD Pipeline
 
+# Triggers for the workflow
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual triggering of the workflow
   push:
     branches:
-      - main
+      - main  # Trigger on pushes to the main branch
   pull_request:
     branches:
-      - main
+      - main  # Trigger on pull requests targeting the main branch
 
 jobs:
+  # Build and Test Job: Sets up the environment, installs dependencies, and runs tests
   build_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v4.1.5  # Check out the repository's code
 
       - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v2  # Set up Java Development Kit version 11
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'adopt'  # Use AdoptOpenJDK distribution
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v4.0.2  # Set up Node.js environment
         with:
-          node-version: '20'
+          node-version: '20'  # Specify Node.js version 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # Install Node.js dependencies
 
       - name: Run Cucumber tests
-        run: npm run test:cucumber
+        run: npm run test:cucumber  # Run Cucumber tests
 
       - name: Upload test results to Xray
-        run: node upload-results.js
+        run: node upload-results.js  # Upload test results to Xray for JIRA integration
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_USER: ${{ secrets.JIRA_USER }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}  # JIRA base URL from secrets
+          JIRA_USER: ${{ secrets.JIRA_USER }}  # JIRA user from secrets
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}  # JIRA API token from secrets
 
+  # Code Scan Job: Scans the code for vulnerabilities and quality issues
   scan:
     runs-on: ubuntu-latest
-    needs: [build_test]
+    needs: [build_test]  # Run after build_test job
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Check out the repository's code
 
       - name: SonarCloud Scan
-        uses: ./.github/template/sonarcloud/
+        uses: ./.github/template/sonarcloud/  # Run SonarCloud scan for code quality and security analysis
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # SonarCloud token for authentication
 
       - name: Scan HTML file for vulnerabilities
         run: |
-          npx retire --path ./ --outputformat json
+          npx retire --path ./ --outputformat json  # Use retire.js to scan for security issues
 
+  # Artifact Creation Job: Packages the application for deployment
   create_artifact:
     runs-on: ubuntu-latest
-    needs: [build_test, scan]
+    needs: [build_test, scan]  # Run after build_test and scan jobs
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Check out the repository's code
 
       - name: Zip artifact for deployment
         run: |
-          ls -l
-          zip release.zip ./* -r
-          ls -l release.zip
+          ls -l  # List all files for verification
+          zip release.zip ./* -r  # Zip all files into release.zip
+          ls -l release.zip  # List the zip file for verification
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  # Upload the zip file as an artifact
         with:
-          name: node-app
-          path: release.zip
+          name: node-app  # Name the artifact
+          path: release.zip  # Path to the artifact
 
+  # Docker Deployment Job: Deploys the Docker container to Kubernetes
   deploy_docker:
-    needs: [create_artifact]
+    needs: [create_artifact]  # Run after create_artifact job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v4.1.5  # Check out the repository's code
 
       - name: Setup kubectl
-        uses: azure/setup-kubectl@v1
+        uses: azure/setup-kubectl@v1  # Set up kubectl for Kubernetes management
         with:
-          version: v1.18.15
+          version: v1.18.15  # Specify kubectl version
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2  # Log in to Docker Hub
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username from secrets
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password from secrets
 
       - name: Build and push Docker image
-        uses: ./.github/template/docker/
+        uses: ./.github/template/docker/  # Build and push Docker image
         with:
-          push: true
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          push: true  # Push the image to the registry
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username from secrets
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}  # Docker Hub token from secrets
 
+  # Web Deployment Job: Deploys the application to Azure Web App
   deploy_web:
-    needs: [create_artifact, deploy_docker]
+    needs: [create_artifact, deploy_docker]  # Run after create_artifact and deploy_docker jobs
     runs-on: ubuntu-latest
     environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.web-app-url }}
+      name: 'production'  # Specify the deployment environment
+      url: ${{ steps.deploy-to-webapp.outputs.web-app-url }}  # Output URL of the deployed app
     permissions:
-      id-token: write
+      id-token: write  # Required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4  # Download the artifact
         with:
-          name: node-app
+          name: node-app  # Name of the artifact
 
       - name: Verify artifact
         run: |
-          ls -la
-          find . -type f -name "release.zip"
+          ls -la  # List all files for verification
+          find . -type f -name "release.zip"  # Verify the presence of the zip file
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip  # Unzip the artifact
 
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v1  # Log in to Azure
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}
-          tenant-id: ${{ secrets.AZURE_TENET_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_B5C6 }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID_B5C6 }}  # Azure client ID from secrets
+          tenant-id: ${{ secrets.AZURE_TENET_ID }}  # Azure tenant ID from secrets
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_B5C6 }}  # Azure subscription ID from secrets
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v2  # Deploy to Azure Web App
         with:
-          app-name: 'fypprojectwebapp'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          app-name: 'fypprojectwebapp'  # Name of the Azure Web App
+          slot-name: 'production'  # Deployment slot name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Publish profile from secrets
+          package: .  # Package to deploy
