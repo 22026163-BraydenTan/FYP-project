@@ -90,7 +90,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Scan HTML file for vulnerabilities
-        run: npx retire --path src/test.html --outputformat json  # Use retire.js to scan for security issues in HTML files
+        run: npx retire --path ./ --outputformat json  # Use retire.js to scan for security issues in HTML files
 
   # Deploy Job: Deploys the application
   deploy:
