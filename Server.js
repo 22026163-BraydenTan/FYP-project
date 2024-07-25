@@ -2,10 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const bcrypt = require('bcrypt');
+require('dotenv').config(); // For loading environment variables from .env file
+
 const app = express();
+const saltRounds = 10;
 
 // MongoDB connection
-mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Define a schema and model for users
 const Schema = mongoose.Schema;
@@ -49,19 +55,21 @@ app.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Username already exists' });
     }
 
-    const newUser = await User.create({ username, email, password });
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = await User.create({ username, email, password: hashedPassword });
     res.status(201).json({ message: 'User registered successfully', user: newUser });
   } catch (err) {
     res.status(400).json({ message: 'Failed to register user', error: err.message });
   }
 });
 
-// Endpoint to handle user login (basic example, not secure)
+// Endpoint to handle user login
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({ username, password });
-    if (user) {
+    const user = await User.findOne({ username });
+    if (user && await bcrypt.compare(password, user.password)) {
       res.status(200).json({ message: 'Login successful', user });
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
