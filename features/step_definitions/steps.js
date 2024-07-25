@@ -52,5 +52,8 @@ Then('the login should fail with an error {string}', function (errorMessage) {
     assert(this.currentUser, 'Login was not successful.');
   } catch (error) {
     assert.strictEqual(error.message, errorMessage);
+    return;
   }
+  throw new Error('Expected login to fail, but it succeeded.');
 });
+
