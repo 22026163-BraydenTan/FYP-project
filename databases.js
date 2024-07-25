@@ -56,7 +56,7 @@ const getUsersCollection = () => {
 
 // Serve the homepage
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'homepage.html'));
+  res.sendFile(path.join(__dirname, '/public/homepage.html'));
 });
 
 // Start server
