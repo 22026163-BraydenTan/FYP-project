@@ -1,10 +1,19 @@
+const express = require('express');
+const path = require('path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+
+// MongoDB connection details
 const uri = 'mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@';
 const dbName = 'FYPassigmenr';
 
+// Express app setup
+const app = express();
+
+// Initialize MongoDB variables
 let db;
 let usersCollection;
 
+// Function to connect to the database
 const connectToDatabase = async () => {
   const client = new MongoClient(uri, {
     serverApi: {
@@ -37,6 +46,7 @@ const connectToDatabase = async () => {
   }
 };
 
+// Function to get the users collection
 const getUsersCollection = () => {
   if (!usersCollection) {
     throw new Error('Users collection is not initialized');
@@ -44,10 +54,6 @@ const getUsersCollection = () => {
   return usersCollection;
 };
 
-module.exports = {
-  connectToDatabase,
-  getUsersCollection,
-};
 // Serve the homepage
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'homepage.html'));
@@ -58,3 +64,10 @@ const PORT = process.env.PORT || 3000;  // Use the PORT environment variable if 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Export functions and app
+module.exports = {
+  connectToDatabase,
+  getUsersCollection,
+  app,
+};
