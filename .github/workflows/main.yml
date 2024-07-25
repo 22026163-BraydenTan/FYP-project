@@ -1,14 +1,15 @@
-name: CI-CD Pipeline
+name: CI/CD Pipeline
 
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  # Start of build job: Build the web application
   build_test:
     runs-on: ubuntu-latest
     steps:
@@ -19,25 +20,26 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt' # Specify distribution
+          distribution: 'adopt'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4.0.2
         with:
           node-version: '20'
 
-      # - name: Set up .Net
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     dotnet-version: '8.x'
-      # - name: Build dotnet
-      #   run: dotnet build --configuration Release
-      # - name: Run tests on HTML files
-      #   run: |
-      #     # Example: Validate HTML file
-      #     npx htmlhint src
+      - name: Install dependencies
+        run: npm install
 
-  # Start of scan job: Scan the code for any vulnerabilities or known CSV
+      - name: Run Cucumber tests
+        run: npm run test:cucumber
+
+      - name: Upload test results to Xray
+        run: node upload-results.js
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER: ${{ secrets.JIRA_USER }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
   scan:
     runs-on: ubuntu-latest
     needs: [build_test]
@@ -48,22 +50,20 @@ jobs:
       - name: SonarCloud Scan
         uses: ./.github/template/sonarcloud/
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Scan HTML file for vulnerabilities
         run: |
-          # Example: Scan for security issues using a tool like retire.js
           npx retire --path ./ --outputformat json
-          
+
   create_artifact:
     runs-on: ubuntu-latest
-    needs: [build_test,scan]
+    needs: [build_test, scan]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-#  Node JS
       - name: Zip artifact for deployment
         run: |
           ls -l
@@ -76,9 +76,8 @@ jobs:
           name: node-app
           path: release.zip
 
-  # Start of docker job: Deploy code via docker to Kubernetes
   deploy_docker:
-    needs: [build_test,scan]
+    needs: [create_artifact]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -89,20 +88,27 @@ jobs:
         with:
           version: v1.18.15
 
-      - name: Docker Deploy
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
         uses: ./.github/template/docker/
         with:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Needed to get PR information, if any
+          push: true
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
   deploy_web:
+    needs: [create_artifact, deploy_docker]
     runs-on: ubuntu-latest
-    needs: [build_test,scan,deploy_docker,create_artifact]
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.web-app-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -114,11 +120,10 @@ jobs:
         run: |
           ls -la
           find . -type f -name "release.zip"
-          # ls -l release.zip
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
