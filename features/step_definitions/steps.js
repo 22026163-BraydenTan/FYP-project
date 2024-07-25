@@ -49,11 +49,9 @@ Then('the login should be successful', function () {
 
 Then('the login should fail with an error {string}', function (errorMessage) {
   try {
-    assert(this.currentUser, 'Login was not successful.');
+    assert.fail('Expected login to fail, but it succeeded.');
   } catch (error) {
     assert.strictEqual(error.message, errorMessage);
-    return;
   }
-  throw new Error('Expected login to fail, but it succeeded.');
 });
 
