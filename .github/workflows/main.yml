@@ -42,7 +42,7 @@ jobs:
         with:
           context: .                       # The context path for the Docker build
           push: true                       # Push the image after building
-          #tags: ${{ secrets.DOCKER_REPOSITORY }}:latest  # Tag the image
+          tags: ${{ secrets.DOCKER_REPOSITORY }}  # Tag the image
 
   # Test Job: Runs tests on the application
   test:
