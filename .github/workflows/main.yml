@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main         # Triggers on push to the main branch
+      - New
   pull_request:
     branches:
       - main         # Triggers on pull requests targeting the main branch
