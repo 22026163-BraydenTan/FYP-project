@@ -30,28 +30,34 @@ Then('the user {string} should exist in the system', function (username) {
   console.log(`User ${username} exists in the system.`);
 });
 
-When('I attempt to log in with username {string} and password {string}', function (username, password) {
-  const user = users[username];
-  if (!user) {
-    throw new Error(`User ${username} does not exist.`);
+When('I attempt to log in with username {string} and password {string}', async function (username, password) {
+  try {
+    const user = users[username];
+    if (!user) {
+      throw new Error(`User ${username} does not exist.`);
+    }
+    if (user.password !== password) {
+      throw new Error('Invalid password.');
+    }
+    this.currentUser = user;
+    this.loginError = null; // Clear any previous login errors
+    console.log(`User ${username} logged in successfully.`);
+  } catch (error) {
+    this.loginError = error.message; // Capture login errors
+    console.log(`Login failed with error: ${this.loginError}`);
   }
-  if (user.password !== password) {
-    throw new Error('Invalid password.');
-  }
-  this.currentUser = user;
-  console.log(`User ${username} logged in successfully.`);
 });
 
 Then('the login should be successful', function () {
-  assert(this.currentUser, 'Login was not successful.');
+  if (!this.currentUser) {
+    throw new Error('Login was not successful.');
+  }
   console.log('Login was successful.');
 });
 
-Then('the login should fail with an error {string}', function (errorMessage) {
-  try {
-    assert.fail('Expected login to fail, but it succeeded.');
-  } catch (error) {
-    assert.strictEqual(error.message, errorMessage);
+Then('the login should fail with an error {string}', function (expectedErrorMessage) {
+  if (!this.loginError) {
+    throw new Error('Expected login to fail, but it succeeded.');
   }
+  assert.strictEqual(this.loginError, expectedErrorMessage, `Expected error message "${expectedErrorMessage}", but got "${this.loginError}"`);
 });
-
