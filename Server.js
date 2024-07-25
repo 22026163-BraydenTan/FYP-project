@@ -1,38 +1,70 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const path = require('path');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-require('dotenv').config(); // For loading environment variables from .env file
 
-const app = express();
+// MongoDB connection details
+const uri = 'mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@';
+const dbName = 'FYPassigmenr';
 const saltRounds = 10;
 
-// MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
-
-// Define a schema and model for users
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
-  username: { type: String, unique: true, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true }
-});
-const User = mongoose.model('User', userSchema);
-
-// Middleware setup
+// Express app setup
+const app = express();
 app.use(bodyParser.json());
-
-// Serve static files
 app.use(express.static(path.join(__dirname, './')));
+
+// Initialize MongoDB variables
+let db;
+let usersCollection;
+
+// Function to connect to the database
+const connectToDatabase = async () => {
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  try {
+    // Connect the client to the server
+    await client.connect();
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+    db = client.db(dbName);
+
+    // Check if the collection exists and create it if it does not
+    const collections = await db.collections();
+    const collectionNames = collections.map(col => col.collectionName);
+    if (!collectionNames.includes('users')) {
+      usersCollection = await db.createCollection('users');
+      console.log('Users collection created');
+    } else {
+      usersCollection = db.collection('users');
+      console.log('Users collection already exists');
+    }
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+};
+
+// Function to get the users collection
+const getUsersCollection = () => {
+  if (!usersCollection) {
+    throw new Error('Users collection is not initialized');
+  }
+  return usersCollection;
+};
 
 // Endpoint to check for duplicate usernames
 app.post('/check-username', async (req, res) => {
   const { username } = req.body;
   try {
-    const user = await User.findOne({ username });
+    const users = await getUsersCollection();
+    const user = await users.findOne({ username });
     res.json({ exists: !!user });
   } catch (err) {
     res.status(500).json({ message: 'Failed to check username', error: err.message });
@@ -49,16 +81,18 @@ app.post('/register', async (req, res) => {
   }
 
   try {
+    const users = await getUsersCollection();
+    
     // Check if username already exists
-    const existingUser = await User.findOne({ username });
+    const existingUser = await users.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: 'Username already exists' });
     }
 
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const newUser = await User.create({ username, email, password: hashedPassword });
-    res.status(201).json({ message: 'User registered successfully', user: newUser });
+    const newUser = await users.insertOne({ username, email, password: hashedPassword });
+    res.status(201).json({ message: 'User registered successfully', user: newUser.ops[0] });
   } catch (err) {
     res.status(400).json({ message: 'Failed to register user', error: err.message });
   }
@@ -68,7 +102,8 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({ username });
+    const users = await getUsersCollection();
+    const user = await users.findOne({ username });
     if (user && await bcrypt.compare(password, user.password)) {
       res.status(200).json({ message: 'Login successful', user });
     } else {
@@ -89,3 +124,13 @@ const PORT = process.env.PORT || 3000;  // Use the PORT environment variable if 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Connect to the database before starting the server
+connectToDatabase().catch(console.error);
+
+// Export functions and app
+module.exports = {
+  connectToDatabase,
+  getUsersCollection,
+  app,
+};
