@@ -1,58 +1,78 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const path = require('path');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-
-// MongoDB connection details
-const uri = 'mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@';
-const dbName = 'FYPassigmenr';
-
-// Express app setup
 const app = express();
 
-// Initialize MongoDB variables
-let db;
-let usersCollection;
+// MongoDB connection using Mongoose
+mongoose.connect('mongodb://fypprojectwebapp-server:tSNFCKbAvOnyJdIrXkYsQSIkuik8M3VRnUjDmftyWCZjKRrgrXuvSPsWK7OjxQ0qVFeZK2FFXEJtACDb2508Og==@fypprojectwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fypprojectwebapp-server@', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("Successfully connected to MongoDB!"))
+.catch(err => console.error('Error connecting to MongoDB:', err));
 
-// Function to connect to the database
-const connectToDatabase = async () => {
-  const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+// Define a schema and model for users
+const Schema = mongoose.Schema;
+const userSchema = new Schema({
+  username: { type: String, unique: true, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true }
+});
+const User = mongoose.model('User', userSchema);
+
+// Middleware setup
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, './')));
+
+// Endpoint to check for duplicate usernames
+app.post('/check-username', async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    res.json({ exists: !!user });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to check username', error: err.message });
+  }
+});
+
+// Endpoint to handle user registration
+app.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  // Validate email domain
+  if (!email.endsWith('@gmail.com')) {
+    return res.status(400).json({ message: 'Email must be a @gmail.com address' });
+  }
 
   try {
-    // Connect the client to the server
-    await client.connect();
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-    db = client.db(dbName);
-    
-    // Check if the collection exists and create it if it does not
-    const collections = await db.collections();
-    const collectionNames = collections.map(col => col.collectionName);
-    if (!collectionNames.includes('users')) {
-      usersCollection = await db.createCollection('users');
-      console.log('Users collection created');
-    } else {
-      usersCollection = db.collection('users');
-      console.log('Users collection already exists');
+    // Check if username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
     }
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    throw error;
-  }
-};
 
-// Function to get the users collection
-const getUsersCollection = () => {
-  if (!usersCollection) {
-    throw new Error('Users collection is not initialized');
+    const newUser = await User.create({ username, email, password });
+    res.status(201).json({ message: 'User registered successfully', user: newUser });
+  } catch (err) {
+    res.status(400).json({ message: 'Failed to register user', error: err.message });
   }
-  return usersCollection;
-};
+});
+
+// Endpoint to handle user login (basic example, not secure)
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username, password });
+    if (user) {
+      res.status(200).json({ message: 'Login successful', user });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  } catch (err) {
+    res.status(400).json({ message: 'Failed to login', error: err.message });
+  }
+});
 
 // Serve the homepage
 app.get('*', (req, res) => {
@@ -64,10 +84,3 @@ const PORT = process.env.PORT || 3000;  // Use the PORT environment variable if 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// Export functions and app
-module.exports = {
-  connectToDatabase,
-  getUsersCollection,
-  app,
-};
