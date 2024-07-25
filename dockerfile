@@ -9,4 +9,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "node", "database/databases.js" ]
+CMD [ "node", "databases.js" ]
