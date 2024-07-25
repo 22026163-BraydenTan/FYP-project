@@ -1,0 +1,28 @@
+{
+    "name": "Scan",
+    "version": "1.0.0",
+    "description": "Scan website for statistics",
+    "main": "index.js",
+    "scripts": {
+        "build": "npm pack",
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test:cucumber": "cucumber-js --format json:results/cucumber-report.json"
+    },
+    "dependencies": {
+        "@npmcli/fs": "^3.1.0",
+        "axios": "^1.7.2",
+        "bcrypt": "^5.1.1",
+        "body-parser": "^1.20.2",
+        "express": "^4.19.2",
+        "mongodb": "^6.8.0",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "@cucumber/cucumber": "^7.0.0",
+        "nodemon": "^3.1.4"
+    },
+    "keywords": [],
+    "author": "FYP",
+    "license": "ISC"
+}

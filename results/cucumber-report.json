@@ -1,0 +1,229 @@
+[
+  {
+    "description": "  In order to ensure secure access to the system\n  As a registered user\n  I want to be able to register and log in",
+    "elements": [
+      {
+        "description": "",
+        "id": "user-authentication;registering-a-new-user",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Registering a new user",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 11,
+            "name": "the system is ready for a new user",
+            "match": {
+              "location": "features/step_definitions/steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "I register a user with username \"testuser1\" and password \"password123\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "the user \"testuser1\" should exist in the system",
+            "match": {
+              "location": "features/step_definitions/steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@SCRUM-2",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;successful-login-with-correct-credentials",
+        "keyword": "Scenario",
+        "line": 16,
+        "name": "Successful login with correct credentials",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 17,
+            "name": "the system is ready for a new user",
+            "match": {
+              "location": "features/step_definitions/steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "I register a user with username \"testuser2\" and password \"password123\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 19,
+            "name": "I attempt to log in with username \"testuser2\" and password \"password123\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:33"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "the login should be successful",
+            "match": {
+              "location": "features/step_definitions/steps.js:45"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@SCRUM-2",
+            "line": 15
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;unsuccessful-login-with-incorrect-password",
+        "keyword": "Scenario",
+        "line": 23,
+        "name": "Unsuccessful login with incorrect password",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "the system is ready for a new user",
+            "match": {
+              "location": "features/step_definitions/steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "I register a user with username \"testuser3\" and password \"password123\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 26,
+            "name": "I attempt to log in with username \"testuser3\" and password \"wrongpassword\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:33"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 0,
+              "error_message": "Error: Invalid password.\n    at World.<anonymous> (/workspace/carbonCalculator/features/step_definitions/steps.js:39:11)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 27,
+            "name": "the login should fail with an error \"Invalid password.\"",
+            "match": {
+              "location": "features/step_definitions/steps.js:50"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@SCRUM-2",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "user-authentication",
+    "line": 3,
+    "keyword": "Feature",
+    "name": "User Authentication",
+    "tags": [],
+    "uri": "features/user-authentication.feature"
+  }
+]
