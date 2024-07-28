@@ -1,0 +1,6 @@
+- name: CodeReady Dependency Analytics
+  run: |
+    chmod +x ./.github/template/CRDA/crda
+    ./.github/template/CRDA/crda auth --apikey=${{ secrets.CRDA_API_KEY }}
+    ./.github/template/CRDA/crda analyze .
+  shell: bash
