@@ -20,7 +20,7 @@ jobs:
     name: SCA FYP Project
     steps: #Steps that makes up this whole workflow
       - name: checkout action
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.5
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
