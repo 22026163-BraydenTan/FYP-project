@@ -2,5 +2,5 @@
   run: |
     chmod +x ./.github/template/CRDA/crda
     ./.github/template/CRDA/crda auth --apikey=${{ secrets.CRDA_API_KEY }}
-    ./.github/template/CRDA/action.yml .
+    ./.github/template/CRDA/action.
   shell: bash
