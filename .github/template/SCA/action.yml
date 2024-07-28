@@ -1,0 +1,59 @@
+name: sca 
+
+on: 
+  workflow_dispatch: # Can be started by manually starting the workflow
+  workflow_call: # Can be called by the main ci/cd pipeline
+ # Job Description
+jobs:
+  sca:
+    strategy:
+      fail-fast: false # Shows whole result of the analysis together not just fail
+      matrix:
+        os: [ "ubuntu-20.04"] #Runs on multiple Operating System
+        # Test once with explicit manifest_file, and once without
+        manifest_file: [ "package.json", ""]
+    
+    runs-on: ${{ matrix.os}} 
+    defaults: 
+      run:
+        shell:bash
+    name: SCA FYP Project
+    steps: #Steps that makes up this whole workflow
+      - name: checkout action
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install SCA tool (CRDA) # Installs tool
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: github
+          github_pat: ${{ github.token }} # GitHub Token
+          crda: "latest"
+
+      - name: SCA (CRDA) Scan # Runs the scan
+        id: crda_scan
+        uses: redhat-actions/crda@v1.2
+        with:
+          manifest_file: ${{ matrix.manifest_file }}
+          snyk_token: ${{ secrets.OUR_SNYK_KEY }} # SNYK Key from SNYK Account 
+          fail_on: never
+
+# The report presented in the CRDA Tool will be available in the user interface of GitHub
+      - name: Print JSON analysis report
+        if: ${{ always () && steps.crda_scan.output.crda_report_json }}
+        run: cat ${{ steps.crda_scan.outputs.crda_report_json}}
+
+      - name: Print SARIF analysis report
+        if: ${{ always () && steps.crda_scan.output.crda_report_sarif }}
+        run: cat ${{ steps.crda_scan.outputs.crda_report_sarif}}
+
+      - name: Print Report Link
+        run: echo ${{ steps.crda_scan.outputs.report_link }}
+
+      - name: Print Artifact Name
+        run: echo ${{ steps.crda_scan.outputs.artifact_name }}

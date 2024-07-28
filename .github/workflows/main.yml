@@ -59,6 +59,12 @@ jobs:
       - name: Scan HTML file for vulnerabilities
         run: |
           npx retire --path ./ --outputformat json  # Use retire.js to scan for security issues
+  
+  # SCA Job: Scans the project dependencies for known vulnerabilities
+  needs: build #Before we can start SCA job, we tell it to build the build job first
+  name: SCA
+  uses: ./github/template/SCA/action.yml #Tell it to use definition file called action.yml
+  secrets: inherit #Inherits all secrets to this workflow
 
   # Artifact Creation Job: Packages the application for deployment
   create_artifact:
