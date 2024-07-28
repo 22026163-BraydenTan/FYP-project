@@ -41,6 +41,10 @@ jobs:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}  # JIRA base URL from secrets
           JIRA_USER: ${{ secrets.JIRA_USER }}  # JIRA user from secrets
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}  # JIRA API token from secrets
+                    
+      - name: CodeReady Dependency Analytics # enables CodeReady Dependency Analytics to analyze vulnerabilities in a project's dependencies.
+        uses: redhat-actions/crda@v1
+            
 
   # Code Scan Job: Scans the code for vulnerabilities and quality issues
   scan:
