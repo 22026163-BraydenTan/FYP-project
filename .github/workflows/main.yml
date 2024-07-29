@@ -190,7 +190,7 @@ jobs:
     steps:
       - name: Run OWASP ZAP scan using Docker
         run: |
-          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t ${{ steps.deploy-to-webapp.outputs.web-app-url }} -r zap_report.html
+          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-baseline.py -t ${{ steps.deploy-to-webapp.outputs.web-app-url }} -r zap_report.html
           
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
