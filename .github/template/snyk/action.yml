@@ -1,0 +1,32 @@
+name: 'Snyk Security Scan'
+description: 'A GitHub Action for running Snyk security scans on your project.'
+author: 'Your Name or Organization'
+
+inputs:
+  snyk_token:
+    description: 'Snyk API token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.5
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: '20'
+
+    - name: Install Snyk
+      run: npm install -g snyk
+
+    - name: Run Snyk test for vulnerabilities
+      run: snyk test --severity-threshold=high
+      env:
+        SNYK_TOKEN: ${{ inputs.snyk_token }}
+
+    - name: Monitor project with Snyk
+      run: snyk monitor
+      env:
+        SNYK_TOKEN: ${{ inputs.snyk_token }}

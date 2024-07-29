@@ -1,79 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <meta charset="UTF-8"> <!-- Set character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure the page is responsive and scales properly -->
+    <title>Register</title> <!-- Title of the webpage -->
     <style>
+        /* Basic styling for the body */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: Arial, sans-serif; /* Set font family */
+            background-color: #f4f4f4; /* Set background color */
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 100vh; /* Set full viewport height */
+            margin: 0; /* Remove default margin */
         }
+        /* Styling for the registration container */
         .register-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
+            background-color: #fff; /* Set background color */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Round the corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+            width: 300px; /* Set width */
+            text-align: center; /* Center text */
         }
         .register-container h2 {
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Add margin below the heading */
         }
+        /* Styling for input fields */
         .register-container input[type="text"], 
         .register-container input[type="email"], 
         .register-container input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 90%; /* Set width */
+            padding: 10px; /* Add padding */
+            margin: 10px 0; /* Add margin top and bottom */
+            border: 1px solid #ccc; /* Set border color */
+            border-radius: 5px; /* Round the corners */
         }
+        /* Styling for submit button */
         .register-container input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
+            background-color: #4CAF50; /* Set background color */
+            color: white; /* Set text color */
+            padding: 10px; /* Add padding */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Round the corners */
+            cursor: pointer; /* Change cursor on hover */
+            width: 100%; /* Set button to full width */
         }
         .register-container input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* Change background color on hover */
         }
+        /* Styling for links */
         .register-container a {
-            display: block;
-            margin-top: 10px;
-            color: #333;
-            text-decoration: none;
+            display: block; /* Display links as block elements */
+            margin-top: 10px; /* Add margin on top */
+            color: #333; /* Set text color */
+            text-decoration: none; /* Remove underline */
         }
         .register-container a:hover {
-            text-decoration: underline;
+            text-decoration: underline; /* Add underline on hover */
         }
     </style>
 </head>
 <body>
     <div class="register-container">
-        <h2>Create an Account</h2>
+        <h2>Create an Account</h2> <!-- Heading for the registration form -->
         <form id="registerForm" action="/register" method="POST">
+            <!-- Input fields for registration -->
             <input type="text" id="username" name="username" placeholder="Username" required>
             <input type="email" id="email" name="email" placeholder="Email" required>
             <input type="password" id="password" name="password" placeholder="Password" required>
             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-            <input type="submit" value="Register">
+            <input type="submit" value="Register"> <!-- Submit button -->
         </form>
-        <a href="login.html">Already have an account? Login here</a>
-        <a href='homepage.html'>Home</a>
+        <a href="login.html">Already have an account? Login here</a> <!-- Link to login page -->
+        <a href='homepage.html'>Home</a> <!-- Link to home page -->
     </div>
 
     <script>
+        // Add an event listener for form submission
         document.getElementById('registerForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Get form values
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -81,12 +90,12 @@
             
             // Basic client-side validation
             if (!email.endsWith('@gmail.com')) {
-                alert('Email must be a @gmail.com address');
+                alert('Email must be a @gmail.com address'); // Alert if email is not a Gmail address
                 return;
             }
 
             if (password !== confirm_password) {
-                alert('Passwords do not match');
+                alert('Passwords do not match'); // Alert if passwords do not match
                 return;
             }
             
@@ -101,10 +110,11 @@
                 });
                 const usernameCheckData = await usernameCheckResponse.json();
                 if (usernameCheckData.exists) {
-                    alert('Username already exists');
+                    alert('Username already exists'); // Alert if username already exists
                     return;
                 }
 
+                // Register the user
                 const response = await fetch('/register', {
                     method: 'POST',
                     headers: {
@@ -114,15 +124,14 @@
                 });
                 const data = await response.json();
                 if (response.status === 201) {
-                    alert('Registration successful');
-                    // Redirect or perform actions after successful registration
-                    window.location.href = '/login.html'; // Example redirect to login page
+                    alert('Registration successful'); // Alert on successful registration
+                    window.location.href = '/login.html'; // Redirect to login page
                 } else {
-                    alert(data.message || 'Registration failed');
+                    alert(data.message || 'Registration failed'); // Alert on registration failure
                 }
             } catch (error) {
-                console.error('Error registering user:', error);
-                alert('Error registering user');
+                console.error('Error registering user:', error); // Log error to console
+                alert('Error registering user'); // Alert on error
             }
         });
     </script>

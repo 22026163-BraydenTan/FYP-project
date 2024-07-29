@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Description</title>
+    <meta charset="UTF-8"> <!-- Set character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Set the viewport for responsive design -->
+    <title>Project Description</title> <!-- Title of the webpage -->
     <style>
+        /* Basic styling for the body */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: Arial, sans-serif; /* Set font family */
+            background-color: #f4f4f4; /* Set background color */
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 100vh; /* Set full viewport height */
+            margin: 0; /* Remove default margin */
         }
+        /* Styling for the description container */
         .description-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            text-align: center;
+            background-color: #fff; /* Set background color */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Round the corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+            width: 80%; /* Set width */
+            text-align: center; /* Center text */
         }
         .description-container h1 {
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Add margin below the heading */
         }
+        /* Section styling */
         .description-container section {
-            text-align: left;
-            margin-top: 20px;
+            text-align: left; /* Align text to the left */
+            margin-top: 20px; /* Add margin on top */
         }
         .description-container p {
-            margin-top: 20px;
+            margin-top: 20px; /* Add margin on top */
         }
+        /* Styling for ordered list */
         .description-container ol {
             padding-left: 20px; /* Proper padding for list */
         }
+        /* Styling for list items */
         .description-container li {
             margin: 10px 0; /* Space out list items */
         }
+        /* Styling for button */
         .description-container button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
+            background-color: #4CAF50; /* Set button background color */
+            color: white; /* Set button text color */
+            padding: 10px; /* Add padding */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Round the corners */
+            cursor: pointer; /* Change cursor on hover */
+            width: 100%; /* Set button to full width */
+            margin-top: 20px; /* Add margin on top */
         }
         .description-container button:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* Change background color on hover */
         }
     </style>
 </head>
 <body>
     <div class="description-container">
         <header>
-            <h1>Project Description</h1>
+            <h1>Project Description</h1> <!-- Main heading of the page -->
         </header>
         <section>
+            <!-- Project description paragraph -->
             <p>Proposed a Full-Stack application to solve Sustainability issues and implement DevOps release management based on the following requirements:</p>
             <ol>
+                <!-- List of project requirements -->
                 <li>Hello world!</li>
                 <li>Selection and usage of Gitpod, CodeSpaces, Code-Server and VSCode as an integrated development environment and CoPilot for AI-based code completion.</li>
                 <li>Usage of a static code analysis tool used to flag programming errors, bugs, stylistic errors, and suspicious constructs. Integrated with the IDE to detect changes in the code.</li>
@@ -74,6 +82,7 @@
                 <li>Release Management, including workflow diagram, version creation, task assignments, tracking releases, branch and PR creation, build, deployment, test, evidence capture, and reporting.</li>
             </ol>
         </section>
+        <!-- Button to navigate to the home page -->
         <button onclick="location.href='homepage.html'">Home</button>
     </div>
 </body>

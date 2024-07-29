@@ -1,27 +1,28 @@
 // Create a function to initialize the page
 function initializePage() {
-    // Set up the document structure
+    // Set up the document language
     document.documentElement.lang = 'en';
     
-    // Set up the head element
+    // Access the head element of the document
     const head = document.head;
 
-    // Meta elements
+    // Create and append meta element for character set
     const metaCharset = document.createElement('meta');
     metaCharset.setAttribute('charset', 'UTF-8');
     head.appendChild(metaCharset);
 
+    // Create and append meta element for viewport settings
     const metaViewport = document.createElement('meta');
     metaViewport.name = 'viewport';
     metaViewport.content = 'width=device-width, initial-scale=1.0';
     head.appendChild(metaViewport);
 
-    // Title element
+    // Create and append title element
     const title = document.createElement('title');
     title.textContent = 'Our FYP Project';
     head.appendChild(title);
 
-    // Style element
+    // Create and append style element with CSS rules
     const style = document.createElement('style');
     style.textContent = `
         body {
@@ -63,38 +64,40 @@ function initializePage() {
     `;
     head.appendChild(style);
 
-    // Set up the body element
+    // Access the body element of the document
     const body = document.body;
 
-    // Project container
+    // Create and append a div element for project container
     const projectContainer = document.createElement('div');
     projectContainer.className = 'project-container';
     body.appendChild(projectContainer);
 
-    // Header
+    // Create and append a header element inside the project container
     const header = document.createElement('header');
     projectContainer.appendChild(header);
 
+    // Create and append an h1 element inside the header
     const h1 = document.createElement('h1');
     h1.textContent = 'Our FYP Project';
     header.appendChild(h1);
 
-    // Buttons
+    // Create and append the first button inside the project container
     const button1 = document.createElement('button');
     button1.textContent = 'Go to Project Description';
-    button1.onclick = () => location.href = 'project_description.html';
+    button1.onclick = () => location.href = 'project_description.html'; // Navigate to project description page
     projectContainer.appendChild(button1);
 
+    // Create and append the second button inside the project container
     const button2 = document.createElement('button');
     button2.textContent = 'Carbon Emission Calculator';
-    button2.onclick = () => location.href = 'login.html';
+    button2.onclick = () => location.href = 'login.html'; // Navigate to login page
     projectContainer.appendChild(button2);
 
-    // Add event listener for DOMContentLoaded
+    // Add an event listener for the DOMContentLoaded event
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('Document loaded and ready to go!');
+        console.log('Document loaded and ready to go!'); // Log message when the document is fully loaded
     });
 }
 
-// Initialize the page
+// Call the function to initialize the page
 initializePage();
