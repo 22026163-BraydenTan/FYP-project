@@ -115,14 +115,11 @@ jobs:
           # Download OWASP ZAP from the GitHub releases page
           wget https://github.com/zaproxy/zaproxy/releases/download/w2024-07-22/ZAP_WEEKLY_D-2024-07-22.zip
           
-          # Extract the downloaded tar.gz file
-          tar -xzf ZAP_2.13.0_Linux.tar.gz
-          
-          # Move the extracted OWASP ZAP directory to /opt/zap
-          sudo mv ZAP_2.13.0 /opt/zap
+          # Extract the downloaded zip file
+          unzip ZAP_WEEKLY_D-2024-07-22.zip -d /opt/zap
           
           # Create a symbolic link to zap.sh in /usr/local/bin for easy access
-          sudo ln -s /opt/zap/zap.sh /usr/local/bin/zap
+          sudo ln -s /opt/zap/ZAP_WEEKLY_D-2024-07-22/zap.sh /usr/local/bin/zap
           
           # Install zap-cli
           pip3 install zap-cli
@@ -130,10 +127,10 @@ jobs:
       - name: Run OWASP ZAP scan
         run: |
           # Start OWASP ZAP in daemon mode on port 8080
-          /opt/zap/zap.sh -daemon -port 8080 &
+          zap -daemon -port 8080 &
           
           # Wait for ZAP to start
-          sleep 10
+          sleep 60
           
           # Perform a quick scan on the application and save the report in HTML format
           zap-cli quick-scan --self-signed --disable-ssl-check --timeout 600 --output-file zap_report.html http://localhost:8080
@@ -147,6 +144,7 @@ jobs:
           # Upload the ZAP report HTML file as an artifact
           name: zap-report
           path: zap_report.html
+
   
   # Artifact Creation Job: Packages the application for deployment
   create_artifact:
