@@ -88,11 +88,57 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} # SNYK token stored in GitHub Secrets
         run: snyk monitor
-        
+
+      - name: Upload Snyk Report
+        uses: actions/upload-artifact@v3
+        with:
+          # Upload the Snyk report JSON file as an artifact
+          name: snyk-report
+          path: snyk-report.json
+
+  # OWASP ZAP DAST Job: Runs OWASP ZAP dynamic security analysis
+  zap_scan:
+    name: Run OWASP ZAP DAST  # Name of the job
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    needs: [build_test]  # Run after build_test job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.5  # Check out the repository's code
+
+      - name: Set up OWASP ZAP
+        run: |
+          # Download OWASP ZAP from the GitHub releases page
+          wget https://github.com/zaproxy/zaproxy/releases/download/v2.13.0/ZAP_2.13.0_Linux.tar.gz
+          # Extract the downloaded tar.gz file
+          tar -xzf ZAP_2.13.0_Linux.tar.gz
+          # Move the extracted OWASP ZAP directory to /opt/zap
+          sudo mv ZAP_2.13.0 /opt/zap
+          # Create a symbolic link to zap.sh in /usr/local/bin for easy access
+          sudo ln -s /opt/zap/zap.sh /usr/local/bin/zap
+
+      - name: Run OWASP ZAP scan
+        run: |
+          # Start OWASP ZAP in daemon mode on port 8080
+          zap.sh -daemon -port 8080 &
+          # Wait for ZAP to start
+          sleep 10
+          # Perform a quick scan on the application and save the report in HTML format
+          zap-cli quick-scan --self-signed --disable-ssl-check --timeout 600 --output-file zap_report.html http://localhost:8080
+          # Generate a detailed report in XML format
+          zap-cli report --output-file zap_report.xml
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          # Upload the ZAP report HTML file as an artifact
+          name: zap-report
+          path: zap_report.html
+
+
   # Artifact Creation Job: Packages the application for deployment
   create_artifact:
     runs-on: ubuntu-latest
-    needs: [build_test, scan, snyk]  # Run after build_test, scan, and snyk jobs
+    needs: [build_test, scan, snyk, zap_scan]  # Run after build_test, scan, snyk, and zap_scan jobs  # Run after build_test, scan, snyk, and zap_scan jobs
     steps:
       - name: Checkout code
         uses: actions/checkout@v4  # Check out the repository's code
