@@ -66,27 +66,27 @@ jobs:
     needs: [build_test]  # Run after build_test job
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v4.1.5 # Check's out the repository code 
 
-      - name: Set up Node.js
+      - name: Set up Node.js # Set up node.js environment
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20'
+          node-version: '20' # Node.js Versiom
 
       - name: Install dependencies
         run: npm install  # Install Node.js dependencies
 
-      - name: Install Snyk
+      - name: Install Snyk #Installing Snyk
         run: npm install -g snyk
 
-      - name: Run Snyk test for vulnerabilities
+      - name: Run Snyk test for vulnerabilities # Run Snyk security test to scan open-source dependencies to identify vulnerabilities and license issuess
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --severity-threshold=high
 
-      - name: Monitor project with Snyk
+      - name: Monitor project with Snyk #  # Monitor project to continuously track new vulnerabilities and issues
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} # SNYK token stored in GitHub Secrets
         run: snyk monitor
         
   # Artifact Creation Job: Packages the application for deployment
