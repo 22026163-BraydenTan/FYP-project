@@ -105,28 +105,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.5  # Check out the repository's code
 
+      - name: Install pip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+
       - name: Set up OWASP ZAP
         run: |
           # Download OWASP ZAP from the GitHub releases page
-          wget https://github.com/zaproxy/zaproxy/releases/download/v2.15.0/ZAP_2.15.0_Linux.tar.gz
-
+          wget https://github.com/zaproxy/zaproxy/releases/download/v2.13.0/ZAP_2.13.0_Linux.tar.gz
+          
           # Extract the downloaded tar.gz file
-          tar -xzf ZAP_2.15.0_Linux.tar.gz
-
+          tar -xzf ZAP_2.13.0_Linux.tar.gz
+          
           # Move the extracted OWASP ZAP directory to /opt/zap
-          sudo mv ZAP_2.15.0 /opt/zap
-
+          sudo mv ZAP_2.13.0 /opt/zap
+          
           # Create a symbolic link to zap.sh in /usr/local/bin for easy access
           sudo ln -s /opt/zap/zap.sh /usr/local/bin/zap
+          
+          # Install zap-cli
+          pip3 install zap-cli
 
       - name: Run OWASP ZAP scan
         run: |
           # Start OWASP ZAP in daemon mode on port 8080
-          zap.sh -daemon -port 8080 &
-
+          /opt/zap/zap.sh -daemon -port 8080 &
+          
           # Wait for ZAP to start
           sleep 10
-
+          
           # Perform a quick scan on the application and save the report in HTML format
           zap-cli quick-scan --self-signed --disable-ssl-check --timeout 600 --output-file zap_report.html http://localhost:8080
           
@@ -139,7 +147,7 @@ jobs:
           # Upload the ZAP report HTML file as an artifact
           name: zap-report
           path: zap_report.html
-
+  
   # Artifact Creation Job: Packages the application for deployment
   create_artifact:
     runs-on: ubuntu-latest
