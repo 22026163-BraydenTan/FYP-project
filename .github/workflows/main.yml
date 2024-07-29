@@ -96,7 +96,6 @@ jobs:
           name: snyk-report
           path: snyk-report.json
 
-# OWASP ZAP DAST Job: Runs OWASP ZAP dynamic security analysis
   owaspzap:
     name: Run OWASP ZAP DAST  # Name of the job
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
@@ -108,7 +107,7 @@ jobs:
       - name: Install pip
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip
+          sudo apt-get install -y python3-pip unzip
 
       - name: Set up OWASP ZAP
         run: |
