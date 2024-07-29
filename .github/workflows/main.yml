@@ -188,39 +188,10 @@ jobs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
     needs: [deploy_web]  # Run after deploy_web job
     steps:
-      - name: Install pip
+      - name: Run OWASP ZAP scan using Docker
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip unzip
-
-      - name: Set up OWASP ZAP
-        run: |
-          # Download OWASP ZAP from the GitHub releases page
-          wget https://github.com/zaproxy/zaproxy/releases/download/w2024-07-22/ZAP_WEEKLY_D-2024-07-22.zip
+          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t ${{ steps.deploy-to-webapp.outputs.web-app-url }} -r zap_report.html
           
-          # Extract the downloaded zip file
-          unzip ZAP_WEEKLY_D-2024-07-22.zip -d /opt/zap
-          
-          # Create a symbolic link to zap.sh in /usr/local/bin for easy access
-          sudo ln -s /opt/zap/ZAP_WEEKLY_D-2024-07-22/zap.sh /usr/local/bin/zap
-          
-          # Install zap-cli
-          pip3 install zap-cli
-
-      - name: Run OWASP ZAP scan
-        run: |
-          # Start OWASP ZAP in daemon mode on port 8080
-          zap -daemon -port 8080 &
-          
-          # Wait for ZAP to start
-          sleep 60
-          
-          # Perform a quick scan on the deployed application and save the report in HTML format
-          zap-cli quick-scan --self-signed --disable-ssl-check --timeout 600 --output-file zap_report.html ${{ steps.deploy-to-webapp.outputs.web-app-url }}
-          
-          # Generate a detailed report in XML format
-          zap-cli report --output-file zap_report.xml
-
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
         with:
