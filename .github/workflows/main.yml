@@ -144,7 +144,6 @@ jobs:
           # Upload the ZAP report HTML file as an artifact
           name: zap-report
           path: zap_report.html
-
   
   # Artifact Creation Job: Packages the application for deployment
   create_artifact:
