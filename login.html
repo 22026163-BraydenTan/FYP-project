@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carbon Calculator Login</title>
     <style>
-        /* Basic styling for the body to center content and set background color */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -15,7 +14,6 @@
             height: 100vh;
             margin: 0;
         }
-        /* Styling for the login container box */
         .login-container {
             background-color: #fff;
             padding: 20px;
@@ -24,11 +22,9 @@
             width: 300px;
             text-align: center;
         }
-        /* Styling for the header inside the login container */
         .login-container h2 {
             margin-bottom: 20px;
         }
-        /* Styling for text and password inputs */
         .login-container input[type="text"], 
         .login-container input[type="password"] {
             width: 90%;
@@ -37,7 +33,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        /* Styling for the submit button */
         .login-container input[type="submit"] {
             background-color: #4CAF50;
             color: white;
@@ -47,18 +42,15 @@
             cursor: pointer;
             width: 100%;
         }
-        /* Hover effect for the submit button */
         .login-container input[type="submit"]:hover {
             background-color: #45a049;
         }
-        /* Styling for links inside the login container */
         .login-container a {
             display: block;
             margin-top: 10px;
             color: #333;
             text-decoration: none;
         }
-        /* Hover effect for the links */
         .login-container a:hover {
             text-decoration: underline;
         }
@@ -67,19 +59,41 @@
 <body>
     <div class="login-container">
         <h2>Carbon Calculator Login</h2>
-        <!-- Login form with POST method -->
         <form id="loginForm" action="/login" method="POST">
-            <!-- Username input field -->
             <input type="text" id="username" name="username" placeholder="Username" required>
-            <!-- Password input field -->
             <input type="password" id="password" name="password" placeholder="Password" required>
-            <!-- Submit button -->
             <input type="submit" value="Login">
         </form>
-        <!-- Link to register page -->
         <a href="register.html">Create an Account</a>
-        <!-- Link to homepage -->
         <a href='homepage.html'>Home</a>
     </div>
 
     <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (response.status === 200) {
+                    alert('Login successful');
+                    // Redirect or perform actions after successful login
+                    window.location.href = '/carbon_calculator.html'; // Example redirect to dashboard page
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Error logging in:', error);
+                alert('Error logging in');
+            }
+        });
+    </script>
+</body>
+</html>
