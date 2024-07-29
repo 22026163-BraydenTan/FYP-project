@@ -113,7 +113,7 @@ jobs:
       - name: Set up OWASP ZAP
         run: |
           # Download OWASP ZAP from the GitHub releases page
-          wget https://github.com/zaproxy/zaproxy/releases/download/v2.13.0/ZAP_2.13.0_Linux.tar.gz
+          wget https://github.com/zaproxy/zaproxy/releases/download/w2024-07-22/ZAP_WEEKLY_D-2024-07-22.zip
           
           # Extract the downloaded tar.gz file
           tar -xzf ZAP_2.13.0_Linux.tar.gz
