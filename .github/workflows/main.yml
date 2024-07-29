@@ -73,6 +73,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm install  # Install Node.js dependencies
+
       - name: Install Snyk
         run: npm install -g snyk
 
