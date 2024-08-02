@@ -5,49 +5,76 @@ Use this one below
 [fypprojectwebapp.azurewebsites.net](https://fypprojectwebapp.azurewebsites.net)
 
 
-Tasks
+Planning and Setup
+Initial Setup
+- Set up GitHub repository.
+- Configure Visual Studio Code (VSCode) as your primary IDE.
+- Integrate CoPilot for AI-based code completion in VSCode.
 
-- Initiation
-- Set up Gantts Chart Timeline
-- Research and choose one IDE (VScode)
-- Research a suitable static code analysis tool (SonarQube)
-- Research on potential vulneralbilities in the project
-- Establish communication
-- Download Visual studio code
-- Breakdown of task
-- Set up team
-- Planning and design
-- Identify components in the workflow diagram
-- Set up repository and branches for teammates
-- Set up github and share to team members
-- Set up Feature Driven Development
-- Create a database 
-- Frontend Web Development
-- Develop deployment manifests for Kubernetes
-- Create initial drafts of workflow diagrams and CI/CD design
-- Create story board
-- Configure GitHub and Jira integration.
-- Link Github and Jira
-- Install SonarQube for code analysis.
-- "Develop initial test plans using Cucumber & Gherkin.
+Environment Configuration
+- Configure Docker on your local machine.
+- Set up a Kubernetes cluster on Microsoft Azure or other preferred cloud service.
+- Install necessary CI/CD tools (GitHub Actions, SonarCloud).
 
-Integrate SonarLit with IDE.
+Development Phase
+Feature Development
+- Implement the core features of the Sustainability Full Stack Application.
+- Utilize Feature-Driven Development practices to streamline the development process.
+- Develop individual features in separate branches and use GitHub pull requests for code reviews.
 
-Execution
-- Test cases using Cucumber & Gherkin.
-- Integrate GitHub Actions with SonarQube for code quality checks.
+Static Code Analysis
+- Integrate static code analysis tools with VSCode.
+- Configure SonarCloud for code inspection and quality gate checks.
 
-Setting up CI/CD pipeline
-- Test CI/CD workflows with sample code changes.
-- Deploy the containerized application to Kubernetes cluster
-- Test initial project structure and validation
-- Develop mitigation methods for vulnerabilities encountered
-- Testing and evaluation
-- Do testing on the application
-- Create version for next release
-- Assign tasks to new versions
-- Track and report on releases
-- Document changes throughout the different versions
-- Finalize technical documentation and workflows.
+Testing Phase
+Test Plan and Test Cases
+- Define test plans and test cases using Cucumber & Gherkin.
+- Add test cases to specific Jira stories.
+
+Automated Testing
+-Implement automated unit tests.
+- Configure GitHub Actions to run tests automatically on each commit.
+- Upload test results to Jira for Requirement Traceability Matrix.
+
+
+CI/CD Pipeline
+CI/CD Workflow Design
+-Design the End-to-End CI/CD workflow.
+- Implement GitHub Actions workflows for continuous integration and deployment.
+  
+Containerization and Deployment
+-Containerize the application using Docker.
+- Push the Docker image to Docker Hub.
+- Deploy the application to a Kubernetes cluster.
+- Automate the deployment process using GitHub Actions.
+
+Security and Quality Assurance
+Security Scanning
+-Integrate SAST (Static Application Security Testing) into the pipeline.
+- Automate security scans during the commit phase.
+  
+Vulnerability Management
+-Analyze and report identified vulnerabilities.
+- Provide remediation steps and implement fixes.
+
+
+Documentation
+
+Technical Documentation
+- Prepare detailed technical documentation for the project.
+- Include workflow diagrams, release management processes, and CI/CD pipeline details.
+- Document how to use the application, CI/CD pipeline, and other relevant information.
+
+
+Final Review and Submission
+Final Review
+- Review all project deliverables.
+- Ensure all documentation is complete and accurate.
+- Perform final testing and quality checks.
+
+Project Submission
+- Submit the completed project, including the application, documentation, and all required deliverables.
+
+
 
 Last check before Presentation Day
