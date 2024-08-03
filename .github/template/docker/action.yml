@@ -30,4 +30,3 @@ runs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-#        run: docker push your_dockerhub_username/your_image_name:latest	
