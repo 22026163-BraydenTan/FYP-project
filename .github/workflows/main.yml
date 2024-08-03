@@ -109,7 +109,7 @@ jobs:
           name: node-app  # Name the artifact
           path: release.zip  # Path to the artifact
 
-  # Docker Deployment Job: Deploys the Docker container to Kubernetes
+  # Docker Deployment Job: Deploys the Docker container
   deploy_docker:
     needs: [create_artifact]  # Run after create_artifact job
     runs-on: ubuntu-latest
