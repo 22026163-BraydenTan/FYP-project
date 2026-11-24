@@ -1,9 +1,19 @@
-https://22026163-braydentan.github.io/FYP-project/homepage.html
-Use this one below
+## Website
 
+- **GitHub Pages (static website):** [Carbon Footprint Calculator](https://22026163-braydentan.github.io/FYP-project/homepage.html)
+- **Azure Web App** (**DEPRECATED**): [Previous deployment](https://fypprojectwebapp.azurewebsites.net)
 
-[fypprojectwebapp.azurewebsites.net](https://fypprojectwebapp.azurewebsites.net)
+## Project goals
 
+- Estimate a vehicle's carbon emissions based on the distance travelled.
+- Develop a full-stack web application with a frontend, backend, and database.
+- Focus primarily on infrastructure deployment, including containerization, CI/CD automation, and security scanning.
+
+**Current implementation:** The calculator estimates emissions using transport type
+and trip duration. Distance-based calculation is a project goal, not yet implemented.
+
+---
+(Unchanged since project submission)
 
 Planning and Setup
 Initial Setup

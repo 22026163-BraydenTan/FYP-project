@@ -33,7 +33,8 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .login-container input[type="submit"] {
+        .login-container input[type="submit"],
+        .login-container button {
             background-color: #4CAF50;
             color: white;
             padding: 10px;
@@ -42,7 +43,11 @@
             cursor: pointer;
             width: 100%;
         }
-        .login-container input[type="submit"]:hover {
+        .login-container button {
+            margin-top: 10px;
+        }
+        .login-container input[type="submit"]:hover,
+        .login-container button:hover {
             background-color: #45a049;
         }
         .login-container a {
@@ -64,6 +69,7 @@
             <input type="password" id="password" name="password" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
+        <button type="button" onclick="location.href='carbon_calculator.html'">continue as guest</button>
         <a href="register.html">Create an Account</a>
         <a href='homepage.html'>Home</a>
     </div>
