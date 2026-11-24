@@ -12,6 +12,8 @@ runs:
   steps:
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2.2.0
+      with:
+        args: -Dproject.settings=security-tools/sonar-project.properties
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}

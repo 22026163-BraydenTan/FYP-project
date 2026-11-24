@@ -36,7 +36,7 @@ jobs:
         run: npm run test:cucumber  # Run Cucumber tests
 
       - name: Upload test results to Xray
-        run: node upload-results.js  # Upload test results to Xray for JIRA integration
+        run: node scripts/upload-results.js  # Upload test results to Xray for JIRA integration
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}  # JIRA base URL from secrets
           JIRA_USER: ${{ secrets.JIRA_USER }}  # JIRA user from secrets

@@ -12,7 +12,8 @@ const saltRounds = 10; // Number of salt rounds for password hashing
 // Express app setup
 const app = express(); // Create an instance of Express
 app.use(bodyParser.json()); // Use Body-Parser middleware to parse JSON requests
-app.use(express.static(path.join(__dirname, './'))); // Serve static files from the current directory
+app.use('/assets', express.static(path.join(__dirname, '../../assets')));
+app.use(express.static(path.join(__dirname, '../public'))); // Serve static files from the current directory
 
 // MongoDB connection
 mongoose.connect(uri, { 
@@ -87,7 +88,7 @@ app.post('/login', async (req, res) => {
 
 // Serve the homepage
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'homepage.html')); // Serve the homepage file for all routes
+  res.sendFile(path.join(__dirname, '../public/homepage.html')); // Serve the homepage file for all routes
 });
 
 // Start server

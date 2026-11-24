@@ -14,5 +14,5 @@ runs:
         npm run build
 
         echo "> Running CLI"
-        lhci autorun 
+        lhci autorun --config=security-tools/lighthouserc.js
 

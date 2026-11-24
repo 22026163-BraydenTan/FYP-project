@@ -9,4 +9,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "node", "Server.js" ]
+CMD [ "node", "webapp/server/Server.js" ]

@@ -9,7 +9,7 @@ const jiraUser = process.env.JIRA_USER;
 const jiraApiToken = process.env.JIRA_API_TOKEN;
 
 // Resolve the path to the Cucumber report file
-const reportPath = path.resolve(__dirname, 'results/cucumber-report.json');
+const reportPath = path.resolve(__dirname, '../results/cucumber-report.json');
 
 // Function to upload test results to Xray
 const uploadResultsToXray = async () => {

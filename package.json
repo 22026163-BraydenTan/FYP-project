@@ -2,11 +2,11 @@
     "name": "Scan",
     "version": "1.0.0",
     "description": "Scan website for statistics",
-    "main": "index.js",
+    "main": "webapp/server/Server.js",
     "scripts": {
         "build": "npm pack",
-        "start": "node index.js",
-        "dev": "nodemon index.js",
+        "start": "node webapp/server/Server.js",
+        "dev": "nodemon webapp/server/Server.js",
         "test:cucumber": "cucumber-js --format json:results/cucumber-report.json"
     },
     "dependencies": {
